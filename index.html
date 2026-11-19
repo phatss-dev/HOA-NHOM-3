@@ -50,10 +50,12 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      height: 100vh;
-      width: 100vw;
+      height: 100%;
+      width: 100%;
       margin: 0;
-      overflow: hidden;
+      padding: 0;
+      overflow: hidden !important;
+      overscroll-behavior: none !important;
       background:
         radial-gradient(circle at 82% 16%, rgba(16, 185, 129, 0.18) 0%, transparent 45%),
         radial-gradient(circle at 18% 85%, rgba(6, 182, 212, 0.22) 0%, transparent 50%),
@@ -178,14 +180,14 @@
     .pointer-halo.visible { opacity: .9; }
 
     header {
-      height: 54px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      height: 50px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.8rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 50; backdrop-filter: blur(20px); background: rgba(7, 18, 32, 0.85);
       flex-shrink: 0;
     }
     footer {
-      height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-      padding: 0 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); z-index: 50;
+      height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 0 1.8rem; border-top: 1px solid rgba(255, 255, 255, 0.1); z-index: 50;
       background: rgba(7, 18, 32, 0.9); backdrop-filter: blur(16px);
       flex-shrink: 0;
     }
@@ -194,12 +196,13 @@
       position: relative;
       flex: 1;
       width: 100%;
-      height: calc(100vh - 106px);
-      overflow: hidden;
+      height: calc(100% - 98px);
+      overflow: hidden !important;
+      overscroll-behavior: none !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0.8rem 2rem;
+      padding: 0.35rem 1.6rem;
       z-index: 10;
     }
     .slide {
@@ -207,15 +210,16 @@
       width: 100%;
       max-width: 1360px;
       height: 100%;
-      max-height: 840px;
+      max-height: 100%;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 1rem 1.6rem;
-      overflow: hidden;
+      padding: 0.35rem 1.4rem;
+      overflow: hidden !important;
+      overscroll-behavior: none !important;
       transition: opacity 0.45s ease, visibility 0.45s ease;
     }
     .slide.active {
@@ -223,6 +227,20 @@
       visibility: visible;
       pointer-events: auto;
       z-index: 20;
+    }
+
+    /* BỘ TỰ TƯƠNG THÍCH CHO KHUNG CANVA HOẶC MÀN HÌNH CÓ CHIỀU CAO THẤP */
+    @media (max-height: 760px) {
+      header { height: 46px; padding: 0 1.4rem; }
+      footer { height: 44px; padding: 0 1.4rem; }
+      .slides-wrapper { height: calc(100% - 90px); padding: 0.25rem 1.2rem; }
+      .slide { padding: 0.25rem 1rem; }
+    }
+    @media (max-height: 650px) {
+      header { height: 40px; padding: 0 1rem; }
+      footer { height: 38px; padding: 0 1rem; }
+      .slides-wrapper { height: calc(100% - 78px); padding: 0.15rem 0.8rem; }
+      .slide { padding: 0.15rem 0.6rem; }
     }
 
     /* Slide 1 tràn viền làm nổi bật ảnh nền riêng */
@@ -233,18 +251,19 @@
       width: 100%;
       height: 100%;
       padding: 2rem 4rem;
-      background-image: url('backgroud.png'), url('backgroud_2.png');
+      background-image: url('https://lh3.googleusercontent.com/d/1G97IPjHVu99wFhtVw27tDzfi6aARAV0k'), url('backgroud.png');
       background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
+      background-color: #030a14;
     }
 
     .neo-card {
       background: var(--bg-surface);
       border: 1px solid rgba(56, 189, 248, 0.28);
-      border-radius: 18px;
+      border-radius: 16px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 14px 35px rgba(2, 8, 18, 0.55);
+      box-shadow: 0 12px 30px rgba(2, 8, 18, 0.5);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -399,40 +418,40 @@
     <!-- ========================================================
          SLIDE 1: TRANG BÌA (NỀN RIÊNG TỰ TẢI LÊN, TẮT NỀN HIỆU ỨNG)
          ======================================================== -->
-    <div class="slide slide-cover-full active" data-title="Mở Đầu Chuyên Đề">
-      <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/55 to-transparent pointer-events-none z-0"></div>
+    <div id="slide1CoverContainer" class="slide slide-cover-full active relative overflow-hidden" data-title="Mở Đầu Chuyên Đề">
+      <div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/70 to-transparent pointer-events-none z-0"></div>
 
       <div class="relative z-10 w-full max-w-[1360px] mx-auto h-full flex items-center">
-        <div class="max-w-2xl flex flex-col items-start justify-center gap-5">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/25 border border-emerald-400 text-emerald-300 text-sm font-bold uppercase tracking-wider backdrop-blur-md shadow-lg">
+        <div class="max-w-3xl flex flex-col items-start justify-center gap-5">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/25 border border-emerald-400 text-emerald-300 text-base font-bold uppercase tracking-wider backdrop-blur-md shadow-lg">
             <i class="fa-solid fa-graduation-cap"></i> Chuyên Đề Hoá Học – Polymer
           </div>
 
-          <h1 class="text-5xl sm:text-7xl font-black text-white leading-tight drop-shadow-2xl">
+          <h1 class="text-6xl sm:text-8xl font-black text-white leading-tight drop-shadow-2xl">
             VẬT LIỆU <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-300 to-amber-300">CAO SU</span>
           </h1>
 
-          <p class="text-slate-100 text-base sm:text-lg leading-relaxed drop-shadow-md font-medium">
+          <p class="text-slate-100 text-xl sm:text-2xl leading-relaxed drop-shadow-md font-semibold">
             Khám phá toàn diện từ nguồn mủ cây cao su thiên nhiên, cơ chế đàn hồi phân tử, các dòng cao su tổng hợp chiến lược, quá trình lưu hoá mạng không gian 3 chiều đến giải pháp bảo vệ môi trường.
           </p>
 
           <div class="grid grid-cols-3 gap-3.5 w-full pt-1">
             <div class="neo-card p-3.5 border-l-4 border-l-emerald-400 bg-slate-950/80 backdrop-blur-md">
-              <div class="font-extrabold text-emerald-300 text-sm sm:text-base">Cao Su Thiên Nhiên</div>
-              <div class="text-xs text-slate-300">cis-1,4-polyisoprene</div>
+              <div class="font-black text-emerald-300 text-lg sm:text-xl">Cao Su Thiên Nhiên</div>
+              <div class="text-base text-slate-200 font-medium">cis-1,4-polyisoprene</div>
             </div>
             <div class="neo-card p-3.5 border-l-4 border-l-cyan-400 bg-slate-950/80 backdrop-blur-md">
-              <div class="font-extrabold text-cyan-300 text-sm sm:text-base">Cao Su Tổng Hợp</div>
-              <div class="text-xs text-slate-300">Buna, Buna-S, Buna-N, Chloroprene</div>
+              <div class="font-black text-cyan-300 text-lg sm:text-xl">Cao Su Tổng Hợp</div>
+              <div class="text-base text-slate-200 font-medium">Buna, Buna-S, Buna-N, Chloroprene</div>
             </div>
             <div class="neo-card p-3.5 border-l-4 border-l-amber-400 bg-slate-950/80 backdrop-blur-md">
-              <div class="font-extrabold text-amber-300 text-sm sm:text-base">Quá Trình Lưu Hoá</div>
-              <div class="text-xs text-slate-300">Cầu nối –S–S– (150 °C)</div>
+              <div class="font-black text-amber-300 text-lg sm:text-xl">Quá Trình Lưu Hoá</div>
+              <div class="text-base text-slate-200 font-medium">Cầu nối –S–S– (150 °C)</div>
             </div>
           </div>
 
           <div class="pt-3">
-            <button onclick="nextSlide()" class="px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-black text-base flex items-center gap-2.5 shadow-xl shadow-emerald-500/30 transition hover:scale-105 cursor-pointer">
+            <button onclick="nextSlide()" class="px-9 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-black text-xl flex items-center gap-3 shadow-xl shadow-emerald-500/30 transition hover:scale-105 cursor-pointer">
               Bắt Đầu Nội Dung <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
@@ -443,62 +462,62 @@
     <!-- ========================================================
          SLIDE 2: LỘ TRÌNH NỘI DUNG 6 PHẦN (BẮT ĐẦU BẬT NỀN HIỆU ỨNG)
          ======================================================== -->
-    <div class="slide" data-title="Lộ Trình Chuyên Đề">
+    <div class="slide" data-title="Lộ Trình">
       <div class="w-full h-full flex flex-col justify-between">
-        <div class="border-b border-slate-800 pb-2.5 flex justify-between items-center">
+        <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">MỞ ĐẦU</span>
+            <span class="text-sm font-bold uppercase tracking-wider text-emerald-400">MỞ ĐẦU</span>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Cấu Trúc Bài Thuyết Trình (6 Phần Trọng Tâm)</h2>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto py-2">
-          <div class="lg:col-span-7 flex flex-col gap-2.5">
-            <div class="neo-card p-2.5 px-4 flex flex-row items-center gap-4 border-l-4 border-l-amber-400">
-              <span class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 font-black font-mono text-sm flex items-center justify-center shrink-0">I</span>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center my-auto py-1">
+          <div class="lg:col-span-7 flex flex-col gap-1.5">
+            <div class="neo-card py-2.5 px-4 flex flex-row items-center gap-3.5 border-l-4 border-l-amber-400">
+              <span class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 font-black font-mono text-lg flex items-center justify-center shrink-0">I</span>
               <div>
-                <h3 class="font-bold text-white text-sm sm:text-base">Khái Niệm, Tính Chất Vật Lí Chung Và Phân Loại Cao Su</h3>
-                <p class="text-xs text-slate-300">Định nghĩa tính đàn hồi, độ dẻo, cách điện, khả năng hòa tan và 2 nhóm cao su.</p>
+                <h3 class="font-black text-white text-[17.5px] sm:text-[20px] leading-tight">Khái Niệm, Tính Chất Vật Lí Chung Và Phân Loại Cao Su</h3>
+                <p class="text-[14.5px] sm:text-[16.5px] text-slate-100 font-medium leading-snug">Định nghĩa tính đàn hồi, độ dẻo, cách điện, khả năng hòa tan và 2 nhóm cao su.</p>
               </div>
             </div>
 
-            <div class="neo-card p-2.5 px-4 flex flex-row items-center gap-4 border-l-4 border-l-emerald-400">
-              <span class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 font-black font-mono text-sm flex items-center justify-center shrink-0">II</span>
+            <div class="neo-card py-2.5 px-4 flex flex-row items-center gap-3.5 border-l-4 border-l-emerald-400">
+              <span class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-300 font-black font-mono text-lg flex items-center justify-center shrink-0">II</span>
               <div>
-                <h3 class="font-bold text-white text-sm sm:text-base">Cao Su Thiên Nhiên</h3>
-                <p class="text-xs text-slate-300">Nguồn gốc mủ cây, cấu hình cis-1,4-polyisoprene, tính chất lí – hoá và ứng dụng.</p>
+                <h3 class="font-black text-white text-[17.5px] sm:text-[20px] leading-tight">Cao Su Thiên Nhiên</h3>
+                <p class="text-[14.5px] sm:text-[16.5px] text-slate-100 font-medium leading-snug">Nguồn gốc mủ cây, cấu hình cis-1,4-polyisoprene, tính chất lí – hoá và ứng dụng.</p>
               </div>
             </div>
 
-            <div class="neo-card p-2.5 px-4 flex flex-row items-center gap-4 border-l-4 border-l-cyan-400">
-              <span class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-300 font-black font-mono text-sm flex items-center justify-center shrink-0">III</span>
+            <div class="neo-card py-2.5 px-4 flex flex-row items-center gap-3.5 border-l-4 border-l-cyan-400">
+              <span class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-300 font-black font-mono text-lg flex items-center justify-center shrink-0">III</span>
               <div>
-                <h3 class="font-bold text-white text-sm sm:text-base">Cao Su Tổng Hợp</h3>
-                <p class="text-xs text-slate-300">Khái niệm, 3 lí do cần sản xuất và 4 loại thường gặp (Buna, Buna-S, Buna-N, Chloroprene).</p>
+                <h3 class="font-black text-white text-[17.5px] sm:text-[20px] leading-tight">Cao Su Tổng Hợp</h3>
+                <p class="text-[14.5px] sm:text-[16.5px] text-slate-100 font-medium leading-snug">Khái niệm, 3 lí do cần sản xuất và 4 loại thường gặp (Buna, Buna-S, Buna-N, Chloroprene).</p>
               </div>
             </div>
 
-            <div class="neo-card p-2.5 px-4 flex flex-row items-center gap-4 border-l-4 border-l-indigo-400">
-              <span class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-300 font-black font-mono text-sm flex items-center justify-center shrink-0">IV</span>
+            <div class="neo-card py-2.5 px-4 flex flex-row items-center gap-3.5 border-l-4 border-l-indigo-400">
+              <span class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-300 font-black font-mono text-lg flex items-center justify-center shrink-0">IV</span>
               <div>
-                <h3 class="font-bold text-white text-sm sm:text-base">So Sánh Cao Su Thiên Nhiên Và Cao Su Tổng Hợp</h3>
-                <p class="text-xs text-slate-300">Đối chiếu 6 tiêu chí: Nguồn gốc, thành phần, mắt xích, tính chất, nguyên liệu, ứng dụng.</p>
+                <h3 class="font-black text-white text-[17.5px] sm:text-[20px] leading-tight">So Sánh Cao Su Thiên Nhiên Và Cao Su Tổng Hợp</h3>
+                <p class="text-[14.5px] sm:text-[16.5px] text-slate-100 font-medium leading-snug">Đối chiếu 6 tiêu chí: Nguồn gốc, thành phần, mắt xích, tính chất, nguyên liệu, ứng dụng.</p>
               </div>
             </div>
 
-            <div class="neo-card p-2.5 px-4 flex flex-row items-center gap-4 border-l-4 border-l-orange-400">
-              <span class="w-9 h-9 rounded-xl bg-orange-500/20 text-orange-300 font-black font-mono text-sm flex items-center justify-center shrink-0">V</span>
+            <div class="neo-card py-2.5 px-4 flex flex-row items-center gap-3.5 border-l-4 border-l-orange-400">
+              <span class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-300 font-black font-mono text-lg flex items-center justify-center shrink-0">V</span>
               <div>
-                <h3 class="font-bold text-white text-sm sm:text-base">Quá Trình Lưu Hóa Cao Su</h3>
-                <p class="text-xs text-slate-300">Khái niệm, điều kiện 150 °C (2–3% S và 30% S tạo ebonit), bản chất cầu nối –S–S–.</p>
+                <h3 class="font-black text-white text-[17.5px] sm:text-[20px] leading-tight">Quá Trình Lưu Hóa Cao Su</h3>
+                <p class="text-[14.5px] sm:text-[16.5px] text-slate-100 font-medium leading-snug">Khái niệm, điều kiện 150 °C (2–3% S và 30% S tạo ebonit), bản chất cầu nối –S–S–.</p>
               </div>
             </div>
 
-            <div class="neo-card p-2.5 px-4 flex flex-row items-center gap-4 border-l-4 border-l-rose-400">
-              <span class="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-300 font-black font-mono text-sm flex items-center justify-center shrink-0">VI</span>
+            <div class="neo-card py-2.5 px-4 flex flex-row items-center gap-3.5 border-l-4 border-l-rose-400">
+              <span class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-300 font-black font-mono text-lg flex items-center justify-center shrink-0">VI</span>
               <div>
-                <h3 class="font-bold text-white text-sm sm:text-base">Ứng Dụng, Vai Trò Và Vấn Đề Môi Trường</h3>
-                <p class="text-xs text-slate-300">4 lĩnh vực ứng dụng đời sống, thực trạng ô nhiễm và hướng xử lí bền vững.</p>
+                <h3 class="font-black text-white text-[17.5px] sm:text-[20px] leading-tight">Ứng Dụng, Vai Trò Và Vấn Đề Môi Trường</h3>
+                <p class="text-[14.5px] sm:text-[16.5px] text-slate-100 font-medium leading-snug">4 lĩnh vực ứng dụng đời sống, thực trạng ô nhiễm và hướng xử lí bền vững.</p>
               </div>
             </div>
           </div>
@@ -507,16 +526,16 @@
             <div class="photo-slot-card flex-1">
               <img id="img-s2-top" src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/600x300/07162c/10b981?text=Phong+Thi+Nghiem+Polymer'" alt="Nghiên cứu vật liệu Polymer">
               <div class="photo-caption-bar">
-                <span><i class="fa-solid fa-microscope text-emerald-400 mr-1.5"></i> Nghiên cứu cấu trúc vật liệu Polymer</span>
-                <span class="text-[10px] text-emerald-300 font-mono">ẢNH 2.1</span>
+                <span class="text-sm"><i class="fa-solid fa-microscope text-emerald-400 mr-1.5"></i> Nghiên cứu cấu trúc vật liệu Polymer</span>
+                <span class="text-xs text-emerald-300 font-mono">ẢNH 2.1</span>
               </div>
             </div>
 
             <div class="photo-slot-card flex-1">
               <img id="img-s2-bot" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/600x300/07162c/fbbf24?text=Ung+Dung+Cao+Su+Ky+Thuat'" alt="Ứng dụng cao su trong ô tô">
               <div class="photo-caption-bar">
-                <span><i class="fa-solid fa-car text-amber-400 mr-1.5"></i> Ứng dụng cao su trong kỹ thuật hiện đại</span>
-                <span class="text-[10px] text-amber-300 font-mono">ẢNH 2.2</span>
+                <span class="text-sm"><i class="fa-solid fa-car text-amber-400 mr-1.5"></i> Ứng dụng cao su trong kỹ thuật hiện đại</span>
+                <span class="text-xs text-amber-300 font-mono">ẢNH 2.2</span>
               </div>
             </div>
           </div>
@@ -525,69 +544,74 @@
     </div>
 
     <!-- ========================================================
-         SLIDE 3: I. KHÁI NIỆM VÀ PHÂN LOẠI CAO SU
+         SLIDE 3: I. KHÁI NIỆM VÀ PHÂN LOẠI CAO SU (TỐI ƯU KHÔNG BỊ CHE KHUẤT TRÊN CANVA)
          ======================================================== -->
     <div class="slide" data-title="I. Khái Niệm &amp; Phân Loại">
       <div class="w-full h-full flex flex-col justify-between">
-        <div class="border-b border-slate-800 pb-2.5 flex justify-between items-center">
+        <div class="border-b border-slate-800 pb-1.5 flex justify-between items-center">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">PHẦN I • ĐẶC TRƯNG CƠ BẢN</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">I. Khái Niệm Và Phân Loại Cao Su</h2>
+            <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-400">PHẦN I • ĐẶC TRƯNG CƠ BẢN</span>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white">I. Khái Niệm Và Phân Loại Cao Su</h2>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto py-2">
-          <div class="lg:col-span-5 flex flex-col gap-3">
-            <div class="neo-card p-3.5 border-l-4 border-l-emerald-400 space-y-1">
-              <h3 class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center my-auto py-1">
+          <div class="lg:col-span-5 flex flex-col gap-2.5">
+            <!-- Khối 1: Định nghĩa -->
+            <div class="neo-card p-3 border-l-4 border-l-emerald-400 space-y-1">
+              <h3 class="font-black text-white text-base sm:text-lg flex items-center gap-2">
                 <i class="fa-solid fa-circle-check text-emerald-400"></i> 1. Cao Su Là Gì?
               </h3>
-              <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+              <p class="text-sm sm:text-base text-slate-100 leading-snug font-medium">
                 Cao su là <strong>vật liệu polymer có tính đàn hồi</strong>: biến dạng khi chịu tác dụng của lực và trở lại hình dạng ban đầu khi lực ngừng tác dụng.
               </p>
             </div>
 
-            <div class="neo-card p-3.5 border-l-4 border-l-cyan-400 space-y-1">
-              <h3 class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2">
+            <!-- Khối 2: Tính chất vật lí chung -->
+            <div class="neo-card p-3 border-l-4 border-l-cyan-400 space-y-1">
+              <h3 class="font-black text-white text-base sm:text-lg flex items-center gap-2">
                 <i class="fa-solid fa-sliders text-cyan-400"></i> 2. Tính Chất Vật Lí Chung
               </h3>
-              <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
-                • <strong>Tính đàn hồi:</strong> Có thể bị kéo giãn hoặc nén, sau đó trở lại hình dạng ban đầu.<br>
-                • <strong>Tính dẻo, cách điện, độ bền:</strong> Có tính dẻo, cách điện và bền cơ học tốt.<br>
-                • <strong>Khả năng hòa tan:</strong> Không tan trong nước. <em>Cao su chưa lưu hóa</em> tan được trong một số dung môi hữu cơ (benzene, toluene, xăng); <em>cao su đã lưu hóa</em> chỉ trương nở trong các dung môi này.
+              <p class="text-sm sm:text-[15px] text-slate-100 leading-snug font-medium">
+                • <strong>Tính đàn hồi &amp; cơ học:</strong> Kéo giãn hay nén đều tự phục hồi; dẻo, bền, cách điện, cách nhiệt.<br>
+                • <strong>Khả năng hòa tan:</strong> Không tan trong nước. <em>Cao su chưa lưu hóa</em> tan trong benzene, toluene, xăng; <em>cao su đã lưu hóa</em> chỉ trương nở.
               </p>
             </div>
 
-            <div class="neo-card p-3.5 border-l-4 border-l-amber-400 text-xs sm:text-sm text-slate-200 space-y-1">
-              <span class="font-bold text-amber-300 block"><i class="fa-solid fa-code-branch mr-1.5"></i> 3. Phân Loại (2 Nhóm):</span>
-              • <strong>Cao su thiên nhiên:</strong> Lấy từ mủ cây cao su.<br>
-              • <strong>Cao su tổng hợp:</strong> Điều chế bằng phương pháp hóa học từ các monomer, gồm cao su Buna, Buna-S, Buna-N, chloroprene,…
+            <!-- Khối 3: Phân loại 2 nhóm dạng Dashboard 2 cột tiết kiệm chiều cao -->
+            <div class="neo-card p-3 border-l-4 border-l-amber-400 space-y-1.5">
+              <div class="font-black text-amber-300 text-base sm:text-lg flex items-center gap-1.5">
+                <i class="fa-solid fa-code-branch"></i> 3. Phân Loại (2 Nhóm Chính)
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-[14px]">
+                <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 leading-snug">
+                  <strong class="text-emerald-300 block mb-0.5 text-sm sm:text-[15px]"><i class="fa-solid fa-tree mr-1"></i> Cao su thiên nhiên:</strong>
+                  <span class="text-slate-100 font-medium">Chiết xuất từ mủ cây cao su <em>(Hevea brasiliensis)</em>.</span>
+                </div>
+                <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 leading-snug">
+                  <strong class="text-cyan-300 block mb-0.5 text-sm sm:text-[15px]"><i class="fa-solid fa-flask mr-1"></i> Cao su tổng hợp:</strong>
+                  <span class="text-slate-100 font-medium">Từ monomer hoá học (Buna, Buna-S, Buna-N...).</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="lg:col-span-7 flex flex-col gap-3.5">
-            <div class="w-full h-[255px] sm:h-[275px] bg-slate-950/90 rounded-2xl border border-slate-800 p-3.5 flex flex-col justify-between shadow-inner">
+          <!-- Khung mô phỏng lò xo đàn hồi -->
+          <div class="lg:col-span-7 flex flex-col">
+            <div class="w-full h-[280px] sm:h-[310px] lg:h-[330px] bg-slate-950/90 rounded-2xl border border-slate-800 p-3.5 flex flex-col justify-between shadow-inner">
               <div class="flex justify-between items-center text-xs sm:text-sm">
                 <span class="font-mono font-bold text-emerald-400">MÔ PHỎNG CHUỖI POLYMER ĐÀN HỒI (60 FPS)</span>
-                <span id="tension-percent-tag" class="font-mono text-amber-300 font-bold">Lực kéo: 0%</span>
+                <span id="tension-percent-tag" class="font-mono text-amber-300 font-bold text-base sm:text-lg">Lực kéo: 0%</span>
               </div>
 
-              <canvas id="elasticSpringCanvas" class="w-full h-40 cursor-ew-resize touch-none"></canvas>
+              <canvas id="elasticSpringCanvas" class="w-full h-40 sm:h-44 cursor-ew-resize touch-none"></canvas>
 
               <div class="flex items-center gap-3 pt-2 border-t border-slate-800/80">
-                <span class="text-xs sm:text-sm font-bold text-slate-300 whitespace-nowrap">Lực Kéo Giãn:</span>
+                <span class="text-sm font-bold text-slate-200 whitespace-nowrap">Lực Kéo Giãn:</span>
                 <input id="elasticSlider" type="range" min="0" max="100" value="0" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500">
-                <button id="btnSnapBack" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm text-cyan-300 font-bold border border-slate-700 whitespace-nowrap cursor-pointer">
-                  Thả Lực (Snap)
+                <button id="btnSnapBack" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm font-bold text-cyan-300 border border-slate-700 whitespace-nowrap cursor-pointer transition">
+                  NGƯNG TÁC DỤNG LỰC
                 </button>
-              </div>
-            </div>
-
-            <div class="photo-slot-card h-28 sm:h-32 w-full">
-              <img id="img-s3-elastic" src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x300/07162c/38bdf8?text=Minh+Hoa+Tinh+Dan+Hoi'" alt="Minh hoạ tính đàn hồi">
-              <div class="photo-caption-bar">
-                <span><i class="fa-solid fa-compress-arrows-alt text-cyan-400 mr-1.5"></i> Biến dạng khi chịu lực và phục hồi khi ngừng lực tác dụng</span>
-                <span class="text-[10px] text-cyan-300 font-mono">ẢNH 3.1</span>
               </div>
             </div>
           </div>
@@ -600,64 +624,68 @@
          ======================================================== -->
     <div class="slide" data-title="II. Cao Su Thiên Nhiên">
       <div class="w-full h-full flex flex-col justify-between">
-        <div class="border-b border-slate-800 pb-2.5 flex justify-between items-center">
+        <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">PHẦN II • NGUỒN GỐC &amp; ĐẶC TÍNH</span>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-white">II. Cao Su Thiên Nhiên (Cấu Tạo, Tính Chất &amp; Ứng Dụng)</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-emerald-400">PHẦN II • NGUỒN GỐC &amp; ĐẶC TÍNH</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">II. Cao Su Thiên Nhiên (Cấu Tạo, Tính Chất &amp; Ứng Dụng)</h2>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center my-auto py-1">
-          <div class="lg:col-span-6 flex flex-col gap-3">
+          <div class="lg:col-span-6 flex flex-col gap-2.5">
             <div class="w-full bg-slate-950/90 rounded-2xl border border-slate-800 p-3 flex flex-col gap-2 shadow-inner">
-              <div class="flex justify-between items-center text-xs">
-                <span class="font-mono font-bold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+              <div class="flex justify-between items-center text-sm">
+                <span class="font-mono font-black px-3.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-base sm:text-lg">
                   POLYISOPRENE • (C₅H₈)ₙ
                 </span>
-                <span class="text-slate-300 font-mono text-xs">Mắt xích: –CH₂–C(CH₃)=CH–CH₂–</span>
+                <span class="text-slate-200 font-mono text-base sm:text-lg font-black">Mắt xích: –CH₂–C(CH₃)=CH–CH₂–</span>
               </div>
 
-              <!-- Khung hiển thị ảnh công thức cấu tạo Polyizopren.png chuẩn nét -->
-              <div class="w-full h-28 sm:h-32 bg-white rounded-xl p-2.5 flex items-center justify-center border border-slate-200/20 shadow-inner">
-                <img id="img-s4-structure" src="Polyizopren.png" onerror="this.src='https://placehold.co/600x200/ffffff/050D18?text=C%E1%BA%A5u+t%E1%BA%A1o+Polyisoprene'" alt="Công thức cấu tạo Polyisoprene" class="max-h-full max-w-full object-contain block">
+              <!-- Khung hiển thị ảnh thật công thức Polyizopren từ Google Drive -->
+              <div class="w-full h-28 sm:h-32 bg-white rounded-xl p-2.5 flex items-center justify-center border border-slate-200/20 shadow-inner relative overflow-hidden">
+                <img id="img-s4-structure" 
+                     src="https://lh3.googleusercontent.com/d/192M4x-F8urJOdz9dkQSSp1jF96PKy4L_" 
+                     onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='https://drive.google.com/thumbnail?id=192M4x-F8urJOdz9dkQSSp1jF96PKy4L_&sz=w1920';}else{this.src='Polyizopren.png';}" 
+                     alt="Công thức cấu tạo Polyisoprene" 
+                     class="max-h-full max-w-full object-contain block">
               </div>
 
-              <div class="chem-formula text-xs p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-amber-300 text-center font-bold">
+              <div class="chem-formula text-base sm:text-xl p-2 rounded-lg bg-slate-900 border border-slate-800 text-amber-300 text-center font-black">
                 n CH<sub>2</sub>=C(CH<sub>3</sub>)–CH=CH<sub>2</sub> &nbsp;—(xúc tác, t°, p)→&nbsp; (–CH<sub>2</sub>–C(CH<sub>3</sub>)=CH–CH<sub>2</sub>–)<sub>n</sub>
               </div>
             </div>
 
-            <div class="neo-card p-3 border-l-4 border-l-emerald-400 space-y-1 text-xs sm:text-sm">
-              <h3 class="font-extrabold text-emerald-300">1. Nguồn Gốc &amp; 2. Thành Phần Cấu Tạo</h3>
-              <p class="text-slate-200 leading-relaxed">
+            <div class="neo-card p-3.5 border-l-4 border-l-emerald-400 space-y-1.5">
+              <h3 class="font-black text-emerald-300 text-lg sm:text-xl">1. Nguồn Gốc &amp; 2. Thành Phần Cấu Tạo</h3>
+              <p class="text-slate-100 text-[15.5px] sm:text-[17.5px] leading-relaxed font-semibold">
                 • <strong>Nguồn gốc:</strong> Chiết xuất từ mủ (nhựa) cây cao su. Mủ thu hoạch bằng cách cạo vỏ thân cây, sau đó đem đánh đông, sơ chế (cán, sấy) thu được cao su thô.<br>
                 • <strong>Thành phần:</strong> Polymer hydrocarbon <strong>(C<sub>5</sub>H<sub>8</sub>)<sub>n</sub></strong>, thành phần chính là <strong>cis-1,4-polyisoprene</strong> (các mắt xích isoprene liên kết theo cấu hình cis).
               </p>
             </div>
 
-            <!-- Nút tương tác phát video quy trình sản xuất (thay cho 2 ảnh phía dưới) -->
+            <!-- Nút tương tác phát video quy trình sản xuất -->
             <button onclick="openVideoModal()" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-emerald-600/30 via-slate-900 to-cyan-600/30 hover:from-emerald-500/40 hover:to-cyan-500/40 border-2 border-emerald-400/60 hover:border-amber-400 shadow-xl shadow-emerald-950/50 transition-all flex items-center justify-between group cursor-pointer">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-400 to-cyan-400 flex items-center justify-center text-slate-950 shadow-md group-hover:scale-110 transition-transform">
-                  <i class="fa-solid fa-play text-sm"></i>
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-emerald-400 to-cyan-400 flex items-center justify-center text-slate-950 shadow-md group-hover:scale-110 transition-transform">
+                  <i class="fa-solid fa-play text-lg"></i>
                 </div>
                 <div class="text-left">
-                  <div class="text-xs sm:text-sm font-black text-white group-hover:text-amber-300 transition-colors uppercase tracking-wider">
+                  <div class="text-lg sm:text-xl font-black text-white group-hover:text-amber-300 transition-colors uppercase tracking-wider">
                     QUY TRÌNH SẢN XUẤT CAO SU
                   </div>
-                  <div class="text-[11px] text-slate-400">Xem video tư liệu cạo mủ, đánh đông &amp; chế biến</div>
+                  <div class="text-xs sm:text-sm text-slate-300 font-medium">Xem video tư liệu cạo mủ, đánh đông &amp; chế biến</div>
                 </div>
               </div>
-              <span class="text-xs text-emerald-400 group-hover:text-amber-300 font-bold flex items-center gap-1">
-                Xem Video <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+              <span class="text-base sm:text-lg text-emerald-400 group-hover:text-amber-300 font-black flex items-center gap-2">
+                Xem Video <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
               </span>
             </button>
           </div>
 
-          <div class="lg:col-span-6 flex flex-col gap-2.5 text-xs sm:text-sm">
+          <div class="lg:col-span-6 flex flex-col gap-2.5">
             <div class="neo-card p-3 border-l-4 border-l-cyan-400 space-y-1">
-              <h3 class="font-extrabold text-cyan-300">3. Tính Chất Vật Lí</h3>
-              <p class="text-slate-200 leading-relaxed">
+              <h3 class="font-black text-cyan-300 text-lg sm:text-xl">3. Tính Chất Vật Lí</h3>
+              <p class="text-slate-100 text-[15px] sm:text-[17px] leading-snug font-semibold">
                 • <strong>Độ đàn hồi cao:</strong> Biến dạng lớn khi chịu lực và dễ dàng phục hồi hình dạng ban đầu.<br>
                 • <strong>Khối lượng riêng:</strong> Khoảng <strong>913 kg/m³</strong>.<br>
                 • <strong>Nhiệt độ đặc trưng:</strong> Hóa thủy tinh khoảng <strong>–70 °C</strong>; kết tinh ở khoảng <strong>–25 °C</strong>; bắt đầu mềm và chảy dính ở khoảng <strong>40 °C</strong>.<br>
@@ -666,8 +694,8 @@
             </div>
 
             <div class="neo-card p-3 border-l-4 border-l-amber-400 space-y-1">
-              <h3 class="font-extrabold text-amber-300">4. Tính Chất Hóa Học</h3>
-              <p class="text-slate-200 leading-relaxed">
+              <h3 class="font-black text-amber-300 text-lg sm:text-xl">4. Tính Chất Hóa Học</h3>
+              <p class="text-slate-100 text-[15px] sm:text-[17px] leading-snug font-semibold">
                 • <strong>Phản ứng cộng:</strong> Có liên kết đôi C=C nên tham gia phản ứng cộng với <strong>H<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, HCl,…</strong><br>
                 • <strong>Phản ứng lưu hóa:</strong> Tác dụng với lưu huỳnh tạo cao su lưu hóa.<br>
                 • <strong>Dễ bị oxi hóa (lão hóa):</strong> Dưới ánh sáng, nhiệt độ cao, không khí và ozone, liên kết đôi dễ bị cắt đứt làm giảm chất lượng cao su.<br>
@@ -676,8 +704,8 @@
             </div>
 
             <div class="neo-card p-3 border-l-4 border-l-rose-400 space-y-1">
-              <h3 class="font-extrabold text-rose-300">5. Ứng Dụng Đặc Trưng</h3>
-              <p class="text-slate-200 leading-relaxed">
+              <h3 class="font-black text-rose-300 text-lg sm:text-xl">5. Ứng Dụng Đặc Trưng</h3>
+              <p class="text-slate-100 text-[15px] sm:text-[17px] leading-snug font-semibold">
                 • <strong>Sản xuất lốp xe:</strong> Chiếm tỉ trọng lớn nhất (khoảng <strong>70% sản lượng toàn cầu</strong>).<br>
                 • <strong>Đồ gia dụng &amp; Y tế:</strong> Nệm, gối cao su; găng tay, ống dẫn y tế.<br>
                 • <strong>Xây dựng, kĩ thuật:</strong> Đệm chống rung, vật liệu giảm chấn cầu đường, thủy điện.
@@ -689,74 +717,61 @@
     </div>
 
     <!-- ========================================================
-         SLIDE 5: III. CAO SU TỔNG HỢP (KHUNG ẢNH 16:9 OBJECT-CONTAIN TO RÕ)
+         SLIDE 5: III. CAO SU TỔNG HỢP (KHUNG ẢNH THẬT 16:9 NGUYÊN BẢN TỪ DRIVE)
          ======================================================== -->
     <div class="slide" data-title="III. Cao Su Tổng Hợp">
       <div class="w-full h-full flex flex-col justify-between">
         <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">PHẦN III • ĐIỀU CHẾ HOÁ HỌC</span>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-white">III. Cao Su Tổng Hợp (Khái Niệm, Lí Do &amp; 4 Loại Thường Gặp)</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-cyan-400">PHẦN III • ĐIỀU CHẾ HOÁ HỌC</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">III. Cao Su Tổng Hợp (Khái Niệm, Lí Do &amp; 4 Loại Thường Gặp)</h2>
           </div>
-          <span class="text-xs bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 px-3 py-1 rounded-full font-bold">
+          <span class="text-base bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 px-4 py-1.5 rounded-full font-black">
             Trùng hợp &amp; Đồng trùng hợp
           </span>
         </div>
 
-        <div class="grid grid-cols-4 gap-2.5 my-1.5">
-          <button onclick="pickSyntheticRubber(0)" class="synth-tab-btn active p-2.5 rounded-xl border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition cursor-pointer">
-            <i class="fa-solid fa-circle-dot"></i> a. Cao Su Buna
+        <div class="grid grid-cols-4 gap-3 my-1.5">
+          <button onclick="pickSyntheticRubber(0)" class="synth-tab-btn active p-2.5 rounded-xl border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 text-base sm:text-lg font-black flex items-center justify-center gap-2 transition cursor-pointer shadow-md">
+            <i class="fa-solid fa-circle-dot text-lg"></i> a. Cao Su Buna
           </button>
-          <button onclick="pickSyntheticRubber(1)" class="synth-tab-btn p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition cursor-pointer">
-            <i class="fa-solid fa-shield-halved"></i> b. Cao Su Buna-S
+          <button onclick="pickSyntheticRubber(1)" class="synth-tab-btn p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-base sm:text-lg font-black flex items-center justify-center gap-2 transition cursor-pointer">
+            <i class="fa-solid fa-shield-halved text-lg"></i> b. Cao Su Buna-S
           </button>
-          <button onclick="pickSyntheticRubber(2)" class="synth-tab-btn p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition cursor-pointer">
-            <i class="fa-solid fa-gas-pump"></i> c. Cao Su Buna-N
+          <button onclick="pickSyntheticRubber(2)" class="synth-tab-btn p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-base sm:text-lg font-black flex items-center justify-center gap-2 transition cursor-pointer">
+            <i class="fa-solid fa-gas-pump text-lg"></i> c. Cao Su Buna-N
           </button>
-          <button onclick="pickSyntheticRubber(3)" class="synth-tab-btn p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition cursor-pointer">
-            <i class="fa-solid fa-fire-extinguisher"></i> d. Cao Su Chloroprene
+          <button onclick="pickSyntheticRubber(3)" class="synth-tab-btn p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-base sm:text-lg font-black flex items-center justify-center gap-2 transition cursor-pointer">
+            <i class="fa-solid fa-fire-extinguisher text-lg"></i> d. Cao Su Chloroprene
           </button>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto py-1">
           <div class="lg:col-span-7 flex flex-col gap-2.5">
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-emerald-500/50 shadow-2xl bg-slate-950/95 flex items-center justify-center group">
-              <img id="img-synth-equation" src="buna.png" onerror="this.src='https://placehold.co/960x540/07162c/10b981?text=Anh+Phuong+Trinh+Dieu+Che'" alt="Phương trình điều chế cao su" class="w-full h-full object-contain block transition-all duration-300 transform scale-100">
-              
-              <button onclick="toggleImageAdjuster()" class="absolute top-2 right-2 px-2.5 py-1 rounded-lg bg-slate-900/80 hover:bg-emerald-600 text-[11px] font-bold text-slate-200 border border-slate-700 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 shadow-lg cursor-pointer">
-                <i class="fa-solid fa-sliders"></i> Chỉnh Tỉ Lệ
-              </button>
+            <!-- KHUNG ẢNH THẬT 16:9 CHUẨN ĐẸP KHÔNG CHE CHỮ -->
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-emerald-500/60 shadow-2xl bg-slate-950/95 flex items-center justify-center">
+              <img id="img-synth-equation" 
+                   src="https://lh3.googleusercontent.com/d/1sJL53_JW3yvEpOTRqJuX_sMBe4etux21" 
+                   onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='https://drive.google.com/thumbnail?id=1sJL53_JW3yvEpOTRqJuX_sMBe4etux21&sz=w1920';}else{this.src='buna.jpg';}" 
+                   alt="Phương trình điều chế cao su" 
+                   class="w-full h-full object-contain block transition-all duration-300 transform scale-100">
             </div>
 
-            <!-- Thanh điều chỉnh nhanh tỉ lệ ảnh -->
-            <div id="imageAdjusterPanel" class="hidden p-2 rounded-xl bg-slate-900/95 border border-emerald-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-lg">
-              <div class="flex items-center gap-2">
-                <span class="text-slate-400 font-bold">Chế độ:</span>
-                <button onclick="setImageFitMode('contain')" class="px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[11px] cursor-pointer">Vừa khít (Contain)</button>
-                <button onclick="setImageFitMode('cover')" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 hover:text-white text-[11px] border border-slate-700 cursor-pointer">Phủ đầy (Cover)</button>
+            <div class="neo-card p-3 px-4 bg-slate-950/90 border border-slate-800 flex flex-col gap-1.5">
+              <div class="flex justify-between items-center text-sm">
+                <span id="synthTypeBadge" class="font-black text-emerald-400 uppercase text-base sm:text-lg">a. CAO SU BUNA • TRÙNG HỢP BUTA-1,3-DIENE</span>
+                <span id="synthCatBadge" class="font-mono text-amber-300 font-black text-sm sm:text-base">Điều kiện: Na, t°</span>
               </div>
-              <div class="flex items-center gap-2">
-                <span class="text-slate-400">Thu phóng:</span>
-                <input type="range" min="80" max="130" value="100" oninput="setImageZoom(this.value)" class="w-20 h-1 bg-slate-700 accent-emerald-500 cursor-pointer">
-                <span id="zoomVal" class="text-amber-400 font-mono text-[11px]">100%</span>
-              </div>
-            </div>
-
-            <div class="neo-card p-2.5 px-3.5 bg-slate-950/90 border border-slate-800 flex flex-col gap-1">
-              <div class="flex justify-between items-center text-[11px]">
-                <span id="synthTypeBadge" class="font-bold text-emerald-400 uppercase">a. CAO SU BUNA • TRÙNG HỢP BUTA-1,3-DIENE</span>
-                <span id="synthCatBadge" class="font-mono text-amber-300">Điều kiện: Na, t°</span>
-              </div>
-              <div id="synthEqText" class="chem-formula text-xs sm:text-sm font-bold text-amber-300">
+              <div id="synthEqText" class="chem-formula text-lg sm:text-xl font-black text-amber-300">
                 n CH<sub>2</sub>=CH–CH=CH<sub>2</sub> &nbsp;—(Na, t°)→&nbsp; (–CH<sub>2</sub>–CH=CH–CH<sub>2</sub>–)<sub>n</sub>
               </div>
             </div>
           </div>
 
-          <div class="lg:col-span-5 flex flex-col gap-3 text-xs sm:text-sm">
+          <div class="lg:col-span-5 flex flex-col gap-3">
             <div class="neo-card p-3.5 border-l-4 border-l-cyan-400 space-y-1.5">
-              <h3 class="font-extrabold text-cyan-300">1. Khái Niệm &amp; 2. Lí Do Cần Sản Xuất</h3>
-              <p class="text-slate-200 leading-relaxed text-xs">
+              <h3 class="font-black text-cyan-300 text-lg sm:text-xl">1. Khái Niệm &amp; 2. Lí Do Cần Sản Xuất</h3>
+              <p class="text-slate-100 leading-snug font-semibold text-sm sm:text-[17px]">
                 • <strong>Khái niệm:</strong> Vật liệu polymer đàn hồi được điều chế bằng phản ứng trùng hợp hoặc đồng trùng hợp các chất hữu cơ đơn giản (chủ yếu là hydrocarbon mạch hở chứa liên kết đôi liên hợp).<br>
                 • <strong>3 Lí do cần sản xuất:</strong><br>
                 &nbsp;&nbsp;1. Đáp ứng nhu cầu công nghiệp.<br>
@@ -766,20 +781,22 @@
             </div>
 
             <div class="neo-card p-3.5 border-l-4 border-l-emerald-400 space-y-1.5">
-              <h3 id="synthDetailTitle" class="font-extrabold text-emerald-300">a. Cao Su Buna — Tính Chất &amp; Ứng Dụng</h3>
-              <p id="synthConcept" class="text-slate-300 text-xs italic">
+              <h3 id="synthDetailTitle" class="font-black text-emerald-300 text-lg sm:text-xl">a. Cao Su Buna — Tính Chất &amp; Ứng Dụng</h3>
+              <p id="synthConcept" class="text-slate-300 text-sm sm:text-[15.5px] italic font-semibold">
                 Khái niệm: Polymer tạo thành từ phản ứng trùng hợp buta-1,3-diene.
               </p>
-              <p id="synthFeatures" class="text-slate-100 leading-relaxed font-medium text-xs sm:text-sm">
+              <p id="synthFeatures" class="text-slate-100 leading-snug font-semibold text-sm sm:text-[17px]">
                 Đàn hồi khá tốt, chịu mài mòn; dùng sản xuất săm lốp xe, đế giày, băng tải và các vật dụng cao su thông thường.
               </p>
             </div>
 
-            <div class="photo-slot-card h-32">
-              <img id="img-s6-synth" src="https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/600x300/07162c/38bdf8?text=San+Pham+Cao+Su+Tong+Hop'" alt="Sản phẩm cao su tổng hợp">
-              <div class="photo-caption-bar">
-                <span id="synthImgCaption">Săm lốp xe, đế giày, băng tải cao su</span>
-              </div>
+            <!-- Khung ảnh nhỏ góc phải Slide 5 -->
+            <div class="photo-slot-card h-36 sm:h-40 bg-slate-950 border-2 border-emerald-500/50 shadow-xl overflow-hidden relative flex items-center justify-center">
+              <img id="img-s6-synth" 
+                   src="https://lh3.googleusercontent.com/d/1En6mCqJhWlLKDPNdXZN1JL3w12yIl-T8" 
+                   onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='https://drive.google.com/thumbnail?id=1En6mCqJhWlLKDPNdXZN1JL3w12yIl-T8&sz=w1920';}" 
+                   alt="Ảnh ứng dụng cao su tổng hợp" 
+                   class="w-full h-full object-contain block transition-all duration-300 transform scale-100">
             </div>
           </div>
         </div>
@@ -791,105 +808,105 @@
          ======================================================== -->
     <div class="slide" data-title="IV. So Sánh 2 Nhóm Cao Su">
       <div class="w-full h-full flex flex-col justify-between">
-        <div class="border-b border-slate-800 pb-2.5 flex justify-between items-center">
+        <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">PHẦN IV • ĐỐI CHIẾU TOÀN DIỆN</span>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-white">IV. So Sánh Cao Su Thiên Nhiên Và Cao Su Tổng Hợp</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-indigo-400">PHẦN IV • ĐỐI CHIẾU TOÀN DIỆN</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">IV. So Sánh Cao Su Thiên Nhiên Và Cao Su Tổng Hợp</h2>
           </div>
-          <span class="text-xs bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 px-3.5 py-1 rounded-full font-bold">
+          <span class="text-sm bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 px-4 py-1.5 rounded-full font-bold">
             6 Tiêu Chí Trọng Tâm
           </span>
         </div>
 
         <div class="my-auto py-1 w-full overflow-x-auto">
           <div class="rounded-2xl overflow-hidden border border-slate-700/80 shadow-2xl bg-slate-950/85 backdrop-blur-xl">
-            <table class="w-full text-left text-xs sm:text-sm border-collapse table-fixed">
+            <table class="w-full text-left border-collapse table-fixed">
               <colgroup>
                 <col class="w-[22%]">
                 <col class="w-[39%]">
                 <col class="w-[39%]">
               </colgroup>
               <thead>
-                <tr class="border-b border-slate-700/80 text-xs uppercase font-extrabold tracking-wider">
-                  <th class="p-3 sm:p-3.5 bg-slate-900/95 text-amber-300 border-r border-slate-700/80">
+                <tr class="border-b border-slate-700/80 text-sm sm:text-base uppercase font-black tracking-wider">
+                  <th class="p-3 bg-slate-900/95 text-amber-300 border-r border-slate-700/80">
                     <i class="fa-solid fa-scale-balanced mr-1.5 text-amber-400"></i> Tiêu Chí
                   </th>
-                  <th class="p-3 sm:p-3.5 bg-emerald-950/70 text-emerald-300 border-r border-slate-700/80">
+                  <th class="p-3 bg-emerald-950/70 text-emerald-300 border-r border-slate-700/80">
                     <i class="fa-solid fa-tree mr-1.5 text-emerald-400"></i> Cao Su Thiên Nhiên
                   </th>
-                  <th class="p-3 sm:p-3.5 bg-cyan-950/70 text-cyan-300">
+                  <th class="p-3 bg-cyan-950/70 text-cyan-300">
                     <i class="fa-solid fa-flask mr-1.5 text-cyan-400"></i> Cao Su Tổng Hợp
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-800/80 text-slate-200">
+              <tbody class="divide-y divide-slate-800/80 text-slate-100 text-sm sm:text-base">
                 <tr class="hover:bg-slate-800/40 transition-colors">
-                  <td class="p-3 sm:p-3.5 font-bold text-amber-200 bg-slate-900/50 border-r border-slate-800">
+                  <td class="p-2 sm:p-2.5 font-black text-amber-300 bg-slate-900/50 border-r border-slate-800 text-base sm:text-lg">
                     1. Nguồn gốc
                   </td>
-                  <td class="p-3 sm:p-3.5 border-r border-slate-800 leading-relaxed">
+                  <td class="p-2 sm:p-2.5 border-r border-slate-800 leading-snug font-medium">
                     Mủ cây cao su <em>(Hevea brasiliensis)</em>
                   </td>
-                  <td class="p-3 sm:p-3.5 leading-relaxed">
+                  <td class="p-2 sm:p-2.5 leading-snug font-medium">
                     Điều chế bằng phương pháp hóa học từ monomer
                   </td>
                 </tr>
                 <tr class="hover:bg-slate-800/40 transition-colors bg-slate-900/25">
-                  <td class="p-3 sm:p-3.5 font-bold text-amber-200 bg-slate-900/50 border-r border-slate-800">
+                  <td class="p-2 sm:p-2.5 font-black text-amber-300 bg-slate-900/50 border-r border-slate-800 text-base sm:text-lg">
                     2. Thành phần
                   </td>
-                  <td class="p-3 sm:p-3.5 border-r border-slate-800">
-                    <span class="inline-block px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono font-bold text-xs">
+                  <td class="p-2 sm:p-2.5 border-r border-slate-800">
+                    <span class="inline-block px-3 py-1 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono font-bold text-sm sm:text-base">
                       cis-1,4-polyisoprene
                     </span>
                   </td>
-                  <td class="p-3 sm:p-3.5">
-                    <span class="text-cyan-300 font-semibold">Nhiều loại polymer, copolymer khác nhau</span>
+                  <td class="p-2 sm:p-2.5">
+                    <span class="text-cyan-300 font-bold text-sm sm:text-base">Nhiều loại polymer, copolymer khác nhau</span>
                   </td>
                 </tr>
                 <tr class="hover:bg-slate-800/40 transition-colors">
-                  <td class="p-3 sm:p-3.5 font-bold text-amber-200 bg-slate-900/50 border-r border-slate-800">
+                  <td class="p-2 sm:p-2.5 font-black text-amber-300 bg-slate-900/50 border-r border-slate-800 text-base sm:text-lg">
                     3. Công thức mắt xích
                   </td>
-                  <td class="p-3 sm:p-3.5 border-r border-slate-800">
-                    <span class="chem-formula text-emerald-300 font-bold bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                  <td class="p-2 sm:p-2.5 border-r border-slate-800">
+                    <span class="chem-formula text-emerald-300 font-bold bg-slate-900 px-2.5 py-1 rounded border border-slate-800 text-sm sm:text-base">
                       –CH<sub>2</sub>–C(CH<sub>3</sub>)=CH–CH<sub>2</sub>–
                     </span>
                   </td>
-                  <td class="p-3 sm:p-3.5 leading-relaxed">
+                  <td class="p-2 sm:p-2.5 leading-snug font-medium">
                     Tùy loại (Buna, Buna-S, Buna-N, chloroprene,…)
                   </td>
                 </tr>
                 <tr class="hover:bg-slate-800/40 transition-colors bg-slate-900/25">
-                  <td class="p-3 sm:p-3.5 font-bold text-amber-200 bg-slate-900/50 border-r border-slate-800">
+                  <td class="p-2 sm:p-2.5 font-black text-amber-300 bg-slate-900/50 border-r border-slate-800 text-base sm:text-lg">
                     4. Tính chất
                   </td>
-                  <td class="p-3 sm:p-3.5 border-r border-slate-800 leading-relaxed">
-                    Đàn hồi tốt, bền kéo, chịu mài mòn; <strong class="text-rose-300">dễ lão hóa, kém bền dầu</strong>
+                  <td class="p-2 sm:p-2.5 border-r border-slate-800 leading-snug font-medium">
+                    Đàn hồi tốt, bền kéo, chịu mài mòn; <strong class="text-rose-300 font-bold">dễ lão hóa, kém bền dầu</strong>
                   </td>
-                  <td class="p-3 sm:p-3.5 leading-relaxed">
-                    Đa dạng theo từng loại; <strong class="text-cyan-300">có loại bền dầu, bền ozone, bền nhiệt</strong>
+                  <td class="p-2 sm:p-2.5 leading-snug font-medium">
+                    Đa dạng theo từng loại; <strong class="text-cyan-300 font-bold">có loại bền dầu, bền ozone, bền nhiệt</strong>
                   </td>
                 </tr>
                 <tr class="hover:bg-slate-800/40 transition-colors">
-                  <td class="p-3 sm:p-3.5 font-bold text-amber-200 bg-slate-900/50 border-r border-slate-800">
+                  <td class="p-2 sm:p-2.5 font-black text-amber-300 bg-slate-900/50 border-r border-slate-800 text-base sm:text-lg">
                     5. Nguồn nguyên liệu
                   </td>
-                  <td class="p-3 sm:p-3.5 border-r border-slate-800 leading-relaxed">
+                  <td class="p-2 sm:p-2.5 border-r border-slate-800 leading-snug font-medium">
                     Phụ thuộc cây trồng, khí hậu, mùa vụ
                   </td>
-                  <td class="p-3 sm:p-3.5 leading-relaxed">
+                  <td class="p-2 sm:p-2.5 leading-snug font-medium">
                     Chủ động, sản xuất công nghiệp từ dầu mỏ
                   </td>
                 </tr>
                 <tr class="hover:bg-slate-800/40 transition-colors bg-slate-900/25">
-                  <td class="p-3 sm:p-3.5 font-bold text-amber-200 bg-slate-900/50 border-r border-slate-800">
+                  <td class="p-2 sm:p-2.5 font-black text-amber-300 bg-slate-900/50 border-r border-slate-800 text-base sm:text-lg">
                     6. Ví dụ ứng dụng
                   </td>
-                  <td class="p-3 sm:p-3.5 border-r border-slate-800 leading-relaxed">
+                  <td class="p-2 sm:p-2.5 border-r border-slate-800 leading-snug font-medium">
                     Săm, lốp xe, dây chun, găng tay, nệm gối
                   </td>
-                  <td class="p-3 sm:p-3.5 leading-relaxed">
+                  <td class="p-2 sm:p-2.5 leading-snug font-medium">
                     Lốp xe, gioăng phớt, ống dẫn dầu, vỏ cáp điện
                   </td>
                 </tr>
@@ -898,8 +915,8 @@
           </div>
         </div>
 
-        <div class="neo-card p-3 border-l-4 border-l-indigo-400 text-xs sm:text-sm text-slate-200">
-          <strong class="text-indigo-300"><i class="fa-solid fa-circle-info mr-1.5"></i> Tóm lược:</strong> Cao su thiên nhiên vượt trội về độ đàn hồi tự nhiên, trong khi cao su tổng hợp giúp chủ động nguồn cung công nghiệp và bổ sung các đặc tính kháng dầu, chịu nhiệt, chống lão hóa.
+        <div class="neo-card p-3 border-l-4 border-l-indigo-400 text-sm sm:text-base text-slate-200">
+          <strong class="text-indigo-300 font-bold text-base sm:text-lg"><i class="fa-solid fa-circle-info mr-1.5"></i> Tóm lược:</strong> Cao su thiên nhiên vượt trội về độ đàn hồi tự nhiên, trong khi cao su tổng hợp giúp chủ động nguồn cung công nghiệp và bổ sung các đặc tính kháng dầu, chịu nhiệt, chống lão hóa.
         </div>
       </div>
     </div>
@@ -909,16 +926,16 @@
          ======================================================== -->
     <div class="slide" data-title="V. Quá Trình Lưu Hóa">
       <div class="w-full h-full flex flex-col justify-between">
-        <div class="border-b border-slate-800 pb-2.5 flex justify-between items-center">
+        <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
           <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">PHẦN V • MẠNG LƯỚI KHÔNG GIAN 3 CHIỀU</span>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-white">V. Quá Trình Lưu Hóa Cao Su</h2>
+            <span class="text-sm font-bold uppercase tracking-wider text-amber-400">PHẦN V • MẠNG LƯỚI KHÔNG GIAN 3 CHIỀU</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">V. Quá Trình Lưu Hóa Cao Su</h2>
           </div>
           <div class="flex gap-2.5">
-            <button id="btnTabVulcanSim" onclick="switchVulcanView('sim')" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 shadow-md transition cursor-pointer">
+            <button id="btnTabVulcanSim" onclick="switchVulcanView('sim')" class="px-4 py-2 rounded-xl text-sm sm:text-base font-extrabold bg-amber-500 text-slate-950 shadow-md transition cursor-pointer">
               <i class="fa-solid fa-flask mr-1.5"></i> Cơ Chế &amp; Mô Phỏng Cầu Nối –S–S–
             </button>
-            <button id="btnTabVulcanHist" onclick="switchVulcanView('hist')" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-slate-800 text-slate-300 hover:text-white transition cursor-pointer">
+            <button id="btnTabVulcanHist" onclick="switchVulcanView('hist')" class="px-4 py-2 rounded-xl text-sm sm:text-base font-extrabold bg-slate-800 text-slate-300 hover:text-white transition cursor-pointer">
               <i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Câu Chuyện Lịch Sử Goodyear (1839)
             </button>
           </div>
@@ -927,47 +944,47 @@
         <div id="viewVulcanSim" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto py-1">
           <div class="lg:col-span-6 flex flex-col">
             <div class="w-full h-[360px] sm:h-[385px] bg-slate-950/90 rounded-2xl border border-slate-800 p-4 flex flex-col justify-between shadow-inner">
-              <div class="flex justify-between items-center text-xs sm:text-sm">
-                <span id="vulcanStatusTag" class="font-mono font-bold px-3 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+              <div class="flex justify-between items-center text-sm sm:text-base">
+                <span id="vulcanStatusTag" class="font-mono font-bold px-3 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 text-sm">
                   CAO SU THÔ (CHƯA LƯU HOÁ)
                 </span>
-                <span id="vulcanSubTag" class="text-amber-400 font-mono font-bold text-xs">Mạch thẳng rời rạc dễ trượt</span>
+                <span id="vulcanSubTag" class="text-amber-400 font-mono font-bold text-sm">Mạch thẳng rời rạc dễ trượt</span>
               </div>
 
               <canvas id="vulcanSimCanvas" class="w-full h-56"></canvas>
 
               <div class="flex items-center gap-3 pt-2.5 border-t border-slate-800/80">
-                <button id="btnToggleVulcan" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs sm:text-sm whitespace-nowrap shadow cursor-pointer">
+                <button id="btnToggleVulcan" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs sm:text-sm whitespace-nowrap shadow cursor-pointer">
                   <i class="fa-solid fa-fire mr-1.5"></i> <span id="vulcanBtnText">Lưu Hoá Với Sulfur (150 °C)</span>
                 </button>
-                <span class="text-xs sm:text-sm font-bold text-slate-300 whitespace-nowrap">Kéo Dãn:</span>
-                <input id="vulcanStretchSlider" type="range" min="0" max="100" value="0" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                <span id="vulcanStretchVal" class="text-xs sm:text-sm font-mono font-bold text-amber-300 w-10 text-right">0%</span>
+                <span class="text-sm font-bold text-slate-200 whitespace-nowrap">Kéo Dãn:</span>
+                <input id="vulcanStretchSlider" type="range" min="0" max="100" value="0" class="w-full h-2.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                <span id="vulcanStretchVal" class="text-sm font-mono font-bold text-amber-300 w-10 text-right">0%</span>
               </div>
             </div>
           </div>
 
-          <div class="lg:col-span-6 flex flex-col gap-2.5 text-xs sm:text-sm">
-            <div class="neo-card p-3 border-l-4 border-l-amber-400 space-y-1">
-              <h3 class="font-extrabold text-amber-300">1. Lưu Hóa Là Gì? &amp; 2. Điều Kiện</h3>
-              <p class="text-slate-200 leading-relaxed">
+          <div class="lg:col-span-6 flex flex-col gap-2.5">
+            <div class="neo-card p-3.5 border-l-4 border-l-amber-400 space-y-1">
+              <h3 class="font-black text-amber-300 text-base sm:text-lg">1. Lưu Hóa Là Gì? &amp; 2. Điều Kiện</h3>
+              <p class="text-slate-100 text-sm sm:text-[15.5px] leading-snug font-medium">
                 • <strong>Khái niệm:</strong> Biến cao su thô (mềm, dính, dễ chảy) thành cao su thành phẩm có tính đàn hồi cao, bền chắc và không bị tan chảy.<br>
                 • <strong>Điều kiện:</strong> Đun nóng cao su thô với lưu huỳnh ở khoảng <strong>150 °C</strong>.<br>
                 • <strong>Hàm lượng S:</strong> Cao su mềm dùng khoảng <strong>2–3% lưu huỳnh</strong>; khi dùng khoảng <strong>30% lưu huỳnh</strong> sẽ thu được <strong>ebonit</strong> (một loại cao su cứng).
               </p>
             </div>
 
-            <div class="neo-card p-3 border-l-4 border-l-cyan-400 space-y-1">
-              <h3 class="font-extrabold text-cyan-300">3. Bản Chất &amp; 4. Vai Trò Của Lưu Huỳnh</h3>
-              <p class="text-slate-200 leading-relaxed">
+            <div class="neo-card p-3.5 border-l-4 border-l-cyan-400 space-y-1">
+              <h3 class="font-black text-cyan-300 text-base sm:text-lg">3. Bản Chất &amp; 4. Vai Trò Của Lưu Huỳnh</h3>
+              <p class="text-slate-100 text-sm sm:text-[15.5px] leading-snug font-medium">
                 • <strong>Bản chất:</strong> Chuyển cấu trúc các chuỗi phân tử từ dạng <strong>mạch thẳng</strong> (dễ trượt lên nhau, dễ biến dạng) thành cấu trúc <strong>mạng lưới không gian ba chiều</strong> vững chắc.<br>
                 • <strong>Vai trò của S:</strong> Đóng vai trò những <strong>"cầu nối hóa học" (cầu nối –S–S–)</strong> gắn kết các chuỗi phân tử cao su độc lập thành một khối thống nhất.
               </p>
             </div>
 
-            <div class="neo-card p-3 border-l-4 border-l-emerald-400 space-y-1">
-              <h3 class="font-extrabold text-emerald-300">5. Vì Sao Cao Su Sau Lưu Hóa Bền Và Đàn Hồi Hơn?</h3>
-              <p class="text-slate-200 leading-relaxed">
+            <div class="neo-card p-3.5 border-l-4 border-l-emerald-400 space-y-1">
+              <h3 class="font-black text-emerald-300 text-base sm:text-lg">5. Vì Sao Cao Su Sau Lưu Hóa Bền Và Đàn Hồi Hơn?</h3>
+              <p class="text-slate-100 text-sm sm:text-[15.5px] leading-snug font-medium">
                 • <strong>Trước lưu hóa:</strong> Các phân tử nằm rời rạc, khi kéo dãn sẽ trượt qua nhau làm cao su biến dạng vĩnh viễn.<br>
                 • <strong>Sau lưu hóa:</strong> Cầu nối lưu huỳnh giữ chặt các phân tử như một bộ lò xo; khi thả ra, mạng lưới kéo vật liệu quay về hình dạng ban đầu. Ít dính khi nóng, ít giòn khi lạnh và <strong>không tan trong dung môi hữu cơ (chỉ trương nở)</strong>.
               </p>
@@ -976,22 +993,22 @@
         </div>
 
         <div id="viewVulcanHist" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto py-2">
-          <div class="lg:col-span-7 flex flex-col gap-3.5 text-xs sm:text-sm">
-            <div class="neo-card p-4 border-l-4 border-l-amber-400 space-y-2">
-              <h3 class="font-extrabold text-amber-300 text-base sm:text-lg flex items-center gap-2">
+          <div class="lg:col-span-7 flex flex-col gap-3.5 text-base sm:text-lg">
+            <div class="neo-card p-5 border-l-4 border-l-amber-400 space-y-2.5">
+              <h3 class="font-extrabold text-amber-300 text-lg sm:text-xl flex items-center gap-2">
                 <i class="fa-solid fa-temperature-arrow-up"></i> Bước Ngoặt Năm 1839 Của Charles Goodyear
               </h3>
-              <p class="text-slate-200 leading-relaxed">
+              <p class="text-slate-100 leading-relaxed font-medium">
                 • Trước khi có lưu hóa: Cao su tự nhiên trời nóng thì mềm nhão, trời lạnh thì cứng giòn và dễ nứt.<br>
                 • Năm <strong>1839</strong>, <strong>Charles Goodyear</strong> đun nóng hỗn hợp cao su với lưu huỳnh và phát hiện cấu trúc mạng không gian bền nhiệt → đặt tên là <strong>Lưu hoá (Vulcanization)</strong>.
               </p>
             </div>
 
-            <div class="neo-card p-4 border-l-4 border-l-cyan-400 space-y-2">
-              <h3 class="font-extrabold text-cyan-300 text-base sm:text-lg flex items-center gap-2">
+            <div class="neo-card p-5 border-l-4 border-l-cyan-400 space-y-2.5">
+              <h3 class="font-extrabold text-cyan-300 text-lg sm:text-xl flex items-center gap-2">
                 <i class="fa-solid fa-award"></i> Thành Quả Của Sự Kiên Trì Khoa Học
               </h3>
-              <p class="text-slate-200 leading-relaxed">
+              <p class="text-slate-100 leading-relaxed font-medium">
                 • Phát minh lưu hóa là kết quả của nhiều năm thử nghiệm kiên trì liên tục.<br>
                 • Tên thương hiệu <strong>Goodyear Tire &amp; Rubber Company</strong> được đặt để vinh danh Charles Goodyear dù ông không phải là người sáng lập công ty đó.
               </p>
@@ -1002,13 +1019,13 @@
             <div class="photo-slot-card flex-1">
               <img id="img-s5-goodyear" src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=700&q=80" onerror="this.src='https://placehold.co/500x300/07162c/fbbf24?text=Charles+Goodyear+1839'" alt="Thí nghiệm lưu hoá cao su 1839">
               <div class="photo-caption-bar">
-                <span>Phát minh lưu hoá cao su (1839)</span>
+                <span class="text-base font-bold">Phát minh lưu hoá cao su (1839)</span>
               </div>
             </div>
             <div class="photo-slot-card flex-1">
               <img id="img-s5-network" src="https://images.unsplash.com/photo-1578844251758-2f71da64c96f?auto=format&fit=crop&w=700&q=80" onerror="this.src='https://placehold.co/500x300/07162c/10b981?text=Lop+Xe+Cao+Su+Luu+Hoa'" alt="Sản xuất lốp xe từ cao su lưu hoá">
               <div class="photo-caption-bar">
-                <span>Ứng dụng chế tạo lốp xe chịu lực hiện đại</span>
+                <span class="text-base font-bold">Ứng dụng chế tạo lốp xe chịu lực hiện đại</span>
               </div>
             </div>
           </div>
@@ -1017,89 +1034,15 @@
     </div>
 
     <!-- ========================================================
-         SLIDE 8: VI. ỨNG DỤNG, VAI TRÒ VÀ VẤN ĐỀ MÔI TRƯỜNG
+         SLIDE 8: VI. ỨNG DỤNG, VAI TRÒ VÀ VẤN ĐỀ MÔI TRƯỜNG (FULL TRANG 100% ẢNH)
          ======================================================== -->
-    <div class="slide" data-title="VI. Ứng Dụng &amp; Môi Trường">
-      <div class="w-full h-full flex flex-col justify-between">
-        <div class="border-b border-slate-800 pb-2.5 flex justify-between items-center">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">PHẦN VI • ĐỜI SỐNG &amp; PHÁT TRIỂN BỀN VỮNG</span>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-white">VI. Ứng Dụng, Vai Trò Và Vấn Đề Môi Trường</h2>
-          </div>
-          <span class="text-xs bg-emerald-950 border border-emerald-500/40 text-emerald-300 px-3.5 py-1 rounded-full font-bold">
-            Tái Chế &amp; Công Nghệ Khép Kín
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto py-2">
-          <div class="lg:col-span-6 flex flex-col gap-3">
-            <div class="neo-card p-3.5 space-y-2">
-              <div class="text-xs sm:text-sm font-bold text-emerald-300">
-                <i class="fa-solid fa-star mr-1.5"></i> 1. Vai Trò &amp; 2. Ứng Dụng Theo 4 Lĩnh Vực
-              </div>
-              <p class="text-xs text-slate-300 leading-relaxed">
-                Đóng vai trò cực kì quan trọng nhờ các tính chất ưu việt: <strong>đàn hồi cao, không thấm nước, cách điện, cách nhiệt tốt và ít bị mài mòn</strong>.
-              </p>
-
-              <div class="grid grid-cols-2 gap-2.5 text-xs">
-                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                  <div class="font-bold text-amber-300 mb-0.5"><i class="fa-solid fa-car mr-1"></i> Giao Thông:</div>
-                  <p class="text-slate-200">Lốp xe ô tô, xe máy, xe đạp, đệm giảm xóc,…</p>
-                </div>
-                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                  <div class="font-bold text-cyan-300 mb-0.5"><i class="fa-solid fa-stethoscope mr-1"></i> Y Tế:</div>
-                  <p class="text-slate-200">Găng tay y tế, ống truyền dịch, ống nghe, nút cao su đậy lọ thuốc tiêm,…</p>
-                </div>
-                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                  <div class="font-bold text-indigo-300 mb-0.5"><i class="fa-solid fa-industry mr-1"></i> Công Nghiệp:</div>
-                  <p class="text-slate-200">Băng tải vận chuyển nguyên vật liệu, đệm cao su đặt dưới chân máy móc nặng,…</p>
-                </div>
-                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
-                  <div class="font-bold text-emerald-300 mb-0.5"><i class="fa-solid fa-house-user mr-1"></i> Sinh Hoạt Hằng Ngày:</div>
-                  <p class="text-slate-200">Giày dép, đệm mút, gối cao su, băng thun, găng tay cao su rửa bát,…</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="photo-slot-card h-32">
-              <img id="img-s7-app" src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/600x300/07162c/10b981?text=Ung+Dung+Cao+Su'" alt="Ứng dụng cao su trong giao thông">
-              <div class="photo-caption-bar">
-                <span>Ứng dụng rộng rãi trong giao thông, y tế, công nghiệp và sinh hoạt</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-6 flex flex-col gap-3">
-            <div class="neo-card p-3.5 border-l-4 border-l-rose-500 space-y-1.5 text-xs sm:text-sm">
-              <h3 class="font-extrabold text-rose-300 text-sm sm:text-base flex items-center gap-1.5">
-                <i class="fa-solid fa-triangle-exclamation"></i> 3. Vấn Đề Môi Trường Liên Quan Đến Sản Xuất, Xử Lí
-              </h3>
-              <p class="text-slate-200 leading-relaxed">
-                • <strong>Ô nhiễm nguồn nước:</strong> Nước thải từ quá trình chế biến mủ cao su gây ô nhiễm nguồn nước.<br>
-                • <strong>Ô nhiễm không khí:</strong> Quá trình lưu hóa và đốt nhiên liệu trong nhà máy phát sinh khí thải gây ô nhiễm không khí.<br>
-                • <strong>Không tự phân hủy:</strong> Cao su có cấu trúc bền vững, không tự phân hủy sinh học trong tự nhiên (có thể mất <strong>hàng trăm năm</strong>).
-              </p>
-            </div>
-
-            <div class="neo-card p-3.5 border-l-4 border-l-emerald-400 space-y-1.5 text-xs sm:text-sm">
-              <h3 class="font-extrabold text-emerald-300 text-sm sm:text-base flex items-center gap-1.5">
-                <i class="fa-solid fa-recycle"></i> 4. Hướng Xử Lí Bền Vững
-              </h3>
-              <p class="text-slate-200 leading-relaxed">
-                • <strong>Tái sử dụng làm vật liệu:</strong> Băm nhỏ lốp xe cũ để làm nguyên liệu trải đường giao thông, làm thảm cao su cho sân bóng,…<br>
-                • <strong>Cao su tái sinh:</strong> Tái chế thành cao su tái sinh; hạn chế đốt lốp thải vì sinh khí độc.<br>
-                • <strong>Công nghệ sạch:</strong> Sử dụng công nghệ xử lí nước thải khép kín, giảm thiểu phát thải ra môi trường.
-              </p>
-            </div>
-
-            <div class="photo-slot-card h-28">
-              <img id="img-s7-recycle" src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/600x250/07162c/fbbf24?text=Tai+Che+Lop+Xe'" alt="Tái chế lốp xe cũ">
-              <div class="photo-caption-bar">
-                <span>Băm nhỏ lốp xe cũ làm mặt đường giao thông và thảm sân bóng</span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="slide !p-0 !max-w-none !max-h-none w-full h-full" data-title="VI. Ứng Dụng &amp; Môi Trường">
+      <div class="w-full h-full relative flex items-center justify-center overflow-hidden bg-slate-950">
+        <img id="slide8TopicImg" 
+             src="https://lh3.googleusercontent.com/d/1PHMgxxNUCK6jOKkf4ASLJFI1o2udQUGq" 
+             onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='https://drive.google.com/thumbnail?id=1PHMgxxNUCK6jOKkf4ASLJFI1o2udQUGq&sz=w1920';}else{this.src='giao-thong.jpg';}" 
+             alt="Slide 8 Ứng Dụng Cao Su" 
+             class="w-full h-full object-contain block select-none transition-all duration-300 transform scale-100">
       </div>
     </div>
 
@@ -1114,6 +1057,22 @@
       <button type="button" class="btn-nav-mini" id="btnNextSlide" onclick="nextSlide()" title="Slide tiếp (→)">
         Sau <i class="fa-solid fa-arrow-right"></i>
       </button>
+
+      <!-- CÔNG TẮC 4 CHỦ ĐỀ CHUYỂN XUỐNG VỊ TRÍ NÀY Ở SLIDE 8 THAY CHO NÚT HOÀN THÀNH -->
+      <div id="footerTopicSwitch" class="hidden items-center gap-1.5 ml-1">
+        <button onclick="pickAppTopic(0)" class="app-topic-btn active px-3 py-1 rounded-full border border-emerald-400 bg-emerald-500/20 text-emerald-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow">
+          <i class="fa-solid fa-car"></i> 1. Giao Thông
+        </button>
+        <button onclick="pickAppTopic(1)" class="app-topic-btn px-3 py-1 rounded-full border border-slate-700 bg-slate-900/80 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-stethoscope"></i> 2. Y Tế &amp; Sinh Hoạt
+        </button>
+        <button onclick="pickAppTopic(2)" class="app-topic-btn px-3 py-1 rounded-full border border-slate-700 bg-slate-900/80 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-triangle-exclamation"></i> 3. Ô Nhiễm
+        </button>
+        <button onclick="pickAppTopic(3)" class="app-topic-btn px-3 py-1 rounded-full border border-slate-700 bg-slate-900/80 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-recycle"></i> 4. Xử Lí
+        </button>
+      </div>
     </div>
     <div class="progress-line-track">
       <div class="progress-line-fill" id="progressFill"></div>
@@ -1154,6 +1113,37 @@
        JAVASCRIPT ENGINE ĐẦY ĐỦ HIỆU ỨNG
        ======================================================== -->
   <script>
+    // =========================================================================
+    // CẤU HÌNH LINK HOẶC FILE ID GOOGLE DRIVE TỪ THƯ MỤC CỦA BẠN
+    // =========================================================================
+    const DRIVE_IMAGES = {
+      background: "1G97IPjHVu99wFhtVw27tDzfi6aARAV0k",  // Ảnh nền Slide 1
+      polyizopren: "192M4x-F8urJOdz9dkQSSp1jF96PKy4L_", // Ảnh Polyisoprene (Slide 4)
+      buna: "1sJL53_JW3yvEpOTRqJuX_sMBe4etux21",         // Ảnh phương trình Buna
+      buna_s: "15Wa-XtWwAWKIJ0yxqOrET9gV0UtU9YYj",       // Ảnh phương trình Buna-S
+      buna_n: "14zqEGqJQh6Mnal8-bFfWnqmdqxY7k1ah",       // Ảnh phương trình Buna-N (ĐÃ CẬP NHẬT LINK MỚI)
+      chloroprene: "1yBK1KXn05_LBE0EQce33CHDqTuFk9-EZ",  // Ảnh phương trình Chloroprene
+      isoprene: "1UnzEQLzbxw0GZTCnn9FVx3fi1XGisb5d",
+      // Ảnh nhỏ góc phải Slide 5 theo từng loại cao su:
+      app_buna: "1En6mCqJhWlLKDPNdXZN1JL3w12yIl-T8",
+      app_buna_s: "1xqWfPEMAwRDrpdJxfmNPCwlATSBwCLgm",
+      app_buna_n: "12HyuJiapzcokU-j6Qr-0cgnzi2SX21o-",
+      app_chloroprene: "1h3sKX_CIGCgkh5DPI9247rucQ9zv4GWf",
+      // 4 ảnh mới của Slide 8 từ Google Drive
+      topic_transport: "1PHMgxxNUCK6jOKkf4ASLJFI1o2udQUGq", // 1. giao thông (ĐÃ CẬP NHẬT LINK MỚI)
+      topic_medical: "1IjuPLi7Vgg6nSnoOYC1DWkXSktuFt4hk",   // 2. y tế sinh hoạt (ĐÃ CẬP NHẬT LINK MỚI)
+      topic_pollution: "1Fs9c2STLcF4Bp0W7WIxZmW-wwVV39KtA", // 3. ô nhiễm môi trường
+      topic_recycle: "1b63QQa2D_Z43YZb_xKPVp1P-s5Dn8_yw"     // 4. xử lí (ĐÃ CẬP NHẬT LINK MỚI)
+    };
+
+    // Hàm chuyển đổi sang URL tải ảnh trực tiếp chuẩn HD từ Google Drive
+    function getDriveImageUrl(fileId, localFallback) {
+      if (fileId) {
+        return `https://lh3.googleusercontent.com/d/${fileId}`;
+      }
+      return localFallback || "";
+    }
+
     /* 1. RÈM NHUNG VẬT LÝ 3D & ÂM THANH QUÉT DẢI TẦN */
     const curtainCanvas = document.getElementById('velvetCurtainCanvas');
     const cCtx = curtainCanvas.getContext('2d');
@@ -1487,24 +1477,41 @@
       if (prevBtn) prevBtn.disabled = currentSlide === 0;
 
       const nextBtn = document.getElementById('btnNextSlide');
-      if (nextBtn) {
-        if (currentSlide === totalSlides - 1) {
-          nextBtn.innerHTML = `Hoàn Thành <i class="fa-solid fa-flag-checkered ml-1"></i>`;
-          nextBtn.className = "btn-nav-mini !bg-amber-500 !text-slate-950 font-bold border-amber-400";
-        } else {
+      const topicSwitch = document.getElementById('footerTopicSwitch');
+      
+      if (currentSlide === totalSlides - 1) {
+        // Xoá nút Hoàn thành ở Slide 8, chuyển công tắc xuống vị trí này
+        if (nextBtn) nextBtn.classList.add('hidden');
+        if (topicSwitch) {
+          topicSwitch.classList.remove('hidden');
+          topicSwitch.classList.add('flex');
+        }
+      } else {
+        // Ở các slide 1 - 7: Hiển thị nút Sau, ẩn công tắc
+        if (nextBtn) {
+          nextBtn.classList.remove('hidden');
           nextBtn.innerHTML = `Sau <i class="fa-solid fa-arrow-right ml-1"></i>`;
           nextBtn.className = "btn-nav-mini";
+        }
+        if (topicSwitch) {
+          topicSwitch.classList.add('hidden');
+          topicSwitch.classList.remove('flex');
         }
       }
 
       const secLabel = document.getElementById('sectionLabelTop');
       if (secLabel && slides[currentSlide]) {
-        const title = slides[currentSlide].getAttribute('data-title') || '';
-        secLabel.textContent = `${currentSlide + 1}. ${title.toUpperCase()}`;
+        if (currentSlide === totalSlides - 1) {
+          secLabel.textContent = `8. VI. ${slide8Images[currentAppTopicIdx].title.toUpperCase()}`;
+        } else {
+          const title = slides[currentSlide].getAttribute('data-title') || '';
+          secLabel.textContent = `${currentSlide + 1}. ${title.toUpperCase()}`;
+        }
       }
 
       if (currentSlide === 2) initSpringCanvas();
       if (currentSlide === 6) initVulcanCanvas();
+      if (currentSlide === 7) pickAppTopic(currentAppTopicIdx);
     }
 
     function nextSlide() {
@@ -1515,8 +1522,6 @@
       if (currentSlide < totalSlides - 1) {
         currentSlide++;
         updateSlideDisplay();
-      } else {
-        closeCurtainAndShowThanks();
       }
     }
 
@@ -1566,10 +1571,22 @@
       }
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
         e.preventDefault();
-        nextSlide();
+        if (currentSlide === totalSlides - 1) {
+          if (currentAppTopicIdx < 3) {
+            pickAppTopic(currentAppTopicIdx + 1);
+          } else {
+            closeCurtainAndShowThanks();
+          }
+        } else {
+          nextSlide();
+        }
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
         e.preventDefault();
-        prevSlide();
+        if (currentSlide === totalSlides - 1 && currentAppTopicIdx > 0) {
+          pickAppTopic(currentAppTopicIdx - 1);
+        } else {
+          prevSlide();
+        }
       }
     });
 
@@ -1580,17 +1597,32 @@
       pointerHalo.classList.add('visible');
     }, { passive: true });
 
-    /* 3. CÔNG THỨC HOÁ HỌC BAY NỀN */
+    /* ============================================================================
+       FLOATING CHEMICAL FORMULAS CANVAS
+       ============================================================================ */
     const bgCanvas = document.getElementById('spaceCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let floatingFormulas = [];
-    const chemSymbols = ["(C₅H₈)ₙ", "CH₂=CH-CH=CH₂", "-S-S-", "cis-1,4-polyisoprene", "C₆H₅-CH=CH₂", "CH₂=CH-CN", "913 kg/m³", "150 °C", "Ebonit (30% S)"];
+
+    const chemSymbols = [
+      "(C₅H₈)ₙ",
+      "CH₂=CH-CH=CH₂",
+      "-S-S-",
+      "cis-1,4-polyisoprene",
+      "C₆H₅-CH=CH₂",
+      "CH₂=CH-CN",
+      "CH₂=C(CH₃)-CH=CH₂",
+      "CH₂=C(Cl)-CH=CH₂",
+      "913 kg/m³",
+      "150 °C",
+      "Ebonit (30% S)"
+    ];
 
     function resizeBgCanvas() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
       floatingFormulas = [];
-      for (let i = 0; i < 24; i++) {
+      for (let i = 0; i < 26; i++) {
         floatingFormulas.push({
           x: Math.random() * bgCanvas.width,
           y: Math.random() * bgCanvas.height,
@@ -1628,7 +1660,9 @@
       requestAnimationFrame(renderBgFormulas);
     }
 
-    /* 4. MÔ PHỎNG LÒ XO ĐÀN HỒI 3D (SLIDE 3) */
+    /* ============================================================================
+       SLIDE 3 (index 2): MÔ PHỎNG LÒ XO ĐÀN HỒI 3D
+       ============================================================================ */
     let springInit = false;
     let springTension = 0;
     let springVel = 0;
@@ -1643,11 +1677,12 @@
 
       const setTarget = (v) => {
         targetTension = v;
-        slider.value = v;
-        tag.textContent = `Lực kéo: ${Math.round(v)}%`;
+        if (slider) slider.value = v;
+        if (tag) tag.textContent = `Lực kéo: ${Math.round(v)}%`;
       };
-      slider.oninput = (e) => setTarget(parseFloat(e.target.value));
-      document.getElementById('btnSnapBack').onclick = () => setTarget(0);
+      if (slider) slider.oninput = (e) => setTarget(parseFloat(e.target.value));
+      const snapBtn = document.getElementById('btnSnapBack');
+      if (snapBtn) snapBtn.onclick = () => setTarget(0);
 
       let dragging = false;
       const dragTo = (e) => {
@@ -1678,6 +1713,7 @@
       const crosslinks = [[0,4,9],[1,5,16],[2,6,23],[3,7,12],[4,8,19],[0,8,27],[1,3,28],[2,5,6]];
       const crossSet = new Set();
       crosslinks.forEach(([a, b, i]) => { crossSet.add(a + ':' + i); crossSet.add(b + ':' + i); });
+
       const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
       function fit() {
@@ -1698,6 +1734,7 @@
         ctx.clearRect(0, 0, W, H);
 
         const sec = performance.now() / 1000;
+
         springVel += (targetTension - springTension) * 0.09;
         springVel *= 0.80;
         springTension += springVel;
@@ -1713,12 +1750,45 @@
         const ang = Math.sin(sec * 0.4) * 0.9 + 0.25;
         const cosA = Math.cos(ang), sinA = Math.sin(ang);
 
-        const wallH = Math.min(H - 16, 130);
-        ctx.fillStyle = '#475569';
-        ctx.beginPath(); ctx.roundRect(leftX - 18, cy - wallH / 2, 18, wallH, [4, 0, 0, 4]); ctx.fill();
+        const glow = ctx.createRadialGradient(cx, cy, 10, cx, cy, W * 0.6);
+        glow.addColorStop(0, `hsla(${165 - 140 * tc}, 80%, 45%, ${0.10 + 0.10 * tc})`);
+        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, W, H);
 
-        ctx.fillStyle = `hsl(${165 - 140 * tc}, 80%, 48%)`;
+        const wallH = Math.min(H - 16, 130);
+        const wg = ctx.createLinearGradient(leftX - 18, 0, leftX, 0);
+        wg.addColorStop(0, '#1e293b'); wg.addColorStop(0.6, '#475569'); wg.addColorStop(1, '#94a3b8');
+        ctx.fillStyle = wg;
+        ctx.beginPath(); ctx.roundRect(leftX - 18, cy - wallH / 2, 18, wallH, [4, 0, 0, 4]); ctx.fill();
+        ctx.strokeStyle = 'rgba(148,163,184,0.35)'; ctx.lineWidth = 1.5;
+        for (let y = cy - wallH / 2 + 6; y < cy + wallH / 2; y += 9) {
+          ctx.beginPath(); ctx.moveTo(leftX - 18, y); ctx.lineTo(leftX - 28, y + 8); ctx.stroke();
+        }
+
+        const gripCol = `hsl(${165 - 140 * tc}, 80%, 48%)`;
+        const gg = ctx.createLinearGradient(rightX, 0, rightX + 18, 0);
+        gg.addColorStop(0, `hsl(${165 - 140 * tc}, 80%, 62%)`);
+        gg.addColorStop(1, `hsl(${165 - 140 * tc}, 80%, 30%)`);
+        ctx.save();
+        ctx.shadowColor = gripCol; ctx.shadowBlur = 14 + 10 * tc;
+        ctx.fillStyle = gg;
         ctx.beginPath(); ctx.roundRect(rightX, cy - wallH / 2, 18, wallH, [0, 5, 5, 0]); ctx.fill();
+        ctx.restore();
+        ctx.strokeStyle = 'rgba(255,255,255,0.28)'; ctx.lineWidth = 1.2;
+        for (let y = cy - wallH / 2 + 10; y < cy + wallH / 2 - 6; y += 12) {
+          ctx.beginPath(); ctx.moveTo(rightX + 4, y); ctx.lineTo(rightX + 14, y); ctx.stroke();
+        }
+
+        if (tens > 0.02) {
+          const len = 14 + 40 * tc, ax = rightX + 24, ay = cy;
+          ctx.save();
+          ctx.globalAlpha = 0.5 + 0.5 * tc;
+          ctx.strokeStyle = '#fbbf24'; ctx.fillStyle = '#fbbf24'; ctx.lineWidth = 3 + 2 * tc; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(ax + len, ay); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(ax + len + 9, ay); ctx.lineTo(ax + len - 2, ay - 7); ctx.lineTo(ax + len - 2, ay + 7); ctx.closePath(); ctx.fill();
+          ctx.restore();
+        }
 
         const proj = (x, y, z) => {
           const yr = y * cosA - z * sinA;
@@ -1763,36 +1833,57 @@
             items.push({ z: a.z + 0.1, draw: () => {
               const d = clamp(a.z / 60 + 0.5, 0, 1);
               const r = (isX ? 6.2 : 4.4) * a.sc;
+              const h = isX ? 42 : hue, sat = isX ? 95 : 80, L = (isX ? 50 : 38) + 20 * d;
+              const g = ctx.createRadialGradient(a.px - r * 0.35, a.py - r * 0.35, r * 0.1, a.px, a.py, r);
+              g.addColorStop(0, `hsl(${h}, 90%, ${Math.min(L + 28, 92)}%)`);
+              g.addColorStop(0.55, `hsl(${h}, ${sat}%, ${L}%)`);
+              g.addColorStop(1, `hsl(${h}, ${sat}%, ${Math.max(L - 24, 8)}%)`);
               ctx.beginPath(); ctx.arc(a.px, a.py, r, 0, 6.2832);
-              ctx.fillStyle = isX ? '#fbbf24' : `hsl(${hue}, 80%, ${45 + 15 * d}%)`;
-              ctx.fill();
+              ctx.fillStyle = g; ctx.globalAlpha = 0.6 + 0.4 * d; ctx.fill(); ctx.globalAlpha = 1;
             }});
           }
+        });
+
+        crosslinks.forEach(([a, b, i]) => {
+          const A1 = pts[a][i], B1 = pts[b][i];
+          items.push({ z: (A1.z + B1.z) / 2 - 0.1, draw: () => {
+            ctx.beginPath(); ctx.moveTo(A1.px, A1.py); ctx.lineTo(B1.px, B1.py);
+            ctx.strokeStyle = 'rgba(251,191,36,0.65)'; ctx.lineWidth = 2 * (A1.sc + B1.sc) / 2;
+            ctx.setLineDash([4, 3]); ctx.stroke(); ctx.setLineDash([]);
+          }});
         });
 
         items.sort((a, b) => a.z - b.z);
         items.forEach(it => it.draw());
 
         ctx.font = '600 11px "JetBrains Mono", monospace';
+        ctx.textBaseline = 'alphabetic';
         ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left';
         ctx.fillText(`L/L₀ = ${((rightX - leftX) / L0).toFixed(2)}×`, leftX, H - 6);
         ctx.textAlign = 'right';
         ctx.fillStyle = tc > 0.7 ? '#fbbf24' : '#34d399';
         ctx.fillText(tc < 0.2 ? 'Cuộn hỗn độn (entropy cao)' : tc < 0.7 ? 'Mạch đang duỗi dần' : 'Mạch duỗi thẳng song song', W - 8, H - 6);
+        ctx.fillStyle = '#fbbf24'; ctx.textAlign = 'left';
+        ctx.fillText('● nút khâu mạng', leftX, 12);
 
         requestAnimationFrame(loop);
       }
       loop();
     }
 
-    /* 5. SLIDE 5: 4 LOẠI CAO SU TỔNG HỢP */
+    /* ============================================================================
+       SLIDE 5 (index 4): 4 LOẠI CAO SU TỔNG HỢP THEO ẢNH DRIVE CỦA BẠN
+       ============================================================================ */
     const syntheticRubbers = [
       {
         title: "a. Cao Su Buna — Tính Chất & Ứng Dụng",
         type: "a. CAO SU BUNA • PHẢN ỨNG TRÙNG HỢP",
         cat: "Điều kiện: Na, t°",
         eq: "n CH<sub>2</sub>=CH–CH=CH<sub>2</sub> &nbsp;—(Na, t°)→&nbsp; (–CH<sub>2</sub>–CH=CH–CH<sub>2</sub>–)<sub>n</sub>",
-        imgSrc: "buna.png",
+        driveKey: "buna",
+        localSrc: "buna.jpg",
+        appDriveKey: "app_buna",
+        appLocalSrc: "buna-app.jpg",
         concept: "Khái niệm: Polymer tạo thành từ phản ứng trùng hợp buta-1,3-diene.",
         features: "Đàn hồi khá tốt, chịu mài mòn; dùng sản xuất săm lốp xe, đế giày, băng tải và các vật dụng cao su thông thường.",
         caption: "Cao su Buna: Săm lốp xe, đế giày, băng tải"
@@ -1802,7 +1893,10 @@
         type: "b. CAO SU BUNA-S • PHẢN ỨNG ĐỒNG TRÙNG HỢP",
         cat: "Điều kiện: t°, p, xúc tác",
         eq: "n CH<sub>2</sub>=CH–CH=CH<sub>2</sub> + n C<sub>6</sub>H<sub>5</sub>–CH=CH<sub>2</sub> &nbsp;→&nbsp; (–CH<sub>2</sub>–CH=CH–CH<sub>2</sub>–CH(C<sub>6</sub>H<sub>5</sub>)–CH<sub>2</sub>–)<sub>n</sub>",
-        imgSrc: "buna-s.png",
+        driveKey: "buna_s",
+        localSrc: "buna-s.jpg",
+        appDriveKey: "app_buna_s",
+        appLocalSrc: "buna-s-app.jpg",
         concept: "Khái niệm: Đồng polymer thu được từ phản ứng đồng trùng hợp giữa buta-1,3-diene và styrene (C₆H₅–CH=CH₂).",
         features: "Độ bền cơ học và khả năng chống mài mòn tốt; được dùng rộng rãi nhất để sản xuất lốp ô tô, xe máy và các sản phẩm kĩ thuật chịu mài mòn cao.",
         caption: "Cao su Buna-S: Sản xuất lốp ô tô, xe máy chịu mài mòn cao"
@@ -1812,7 +1906,10 @@
         type: "c. CAO SU BUNA-N • PHẢN ỨNG ĐỒNG TRÙNG HỢP",
         cat: "Điều kiện: t°, p, xúc tác",
         eq: "n CH<sub>2</sub>=CH–CH=CH<sub>2</sub> + n CH<sub>2</sub>=CH–CN &nbsp;→&nbsp; (–CH<sub>2</sub>–CH=CH–CH<sub>2</sub>–CH(CN)–CH<sub>2</sub>–)<sub>n</sub>",
-        imgSrc: "buna-n.png",
+        driveKey: "buna_n",
+        localSrc: "buna-n.jpg",
+        appDriveKey: "app_buna_n",
+        appLocalSrc: "buna-n-app.jpg",
         concept: "Khái niệm: Đồng polymer thu được từ phản ứng đồng trùng hợp giữa buta-1,3-diene và acrylonitrile (CH₂=CH–CN).",
         features: "Rất bền với dầu mỡ, xăng và dung môi hữu cơ; dùng làm ống dẫn dầu, gioăng phớt, màng ngăn chịu dầu trong động cơ và thiết bị công nghiệp.",
         caption: "Cao su Buna-N: Ống dẫn dầu, gioăng phớt, màng ngăn chịu dầu"
@@ -1822,7 +1919,10 @@
         type: "d. CAO SU CHLOROPRENE • PHẢN ỨNG TRÙNG HỢP",
         cat: "Điều kiện: t°, p, xúc tác",
         eq: "n CH<sub>2</sub>=C(Cl)–CH=CH<sub>2</sub> &nbsp;—(t°, p, xúc tác)→&nbsp; (–CH<sub>2</sub>–C(Cl)=CH–CH<sub>2</sub>–)<sub>n</sub>",
-        imgSrc: "chloroprene.png",
+        driveKey: "chloroprene",
+        localSrc: "chloroprene.jpg",
+        appDriveKey: "app_chloroprene",
+        appLocalSrc: "chloroprene-app.jpg",
         concept: "Khái niệm: Polymer tổng hợp từ phản ứng trùng hợp chloroprene (2-chlorobuta-1,3-diene).",
         features: "Đàn hồi cao, cơ tính tốt, bền lửa, bền ozone, chống lão hóa và kháng dầu mỡ tốt hơn cao su thông thường; dùng làm vỏ cáp điện, băng tải chịu nhiệt, ống dẫn dầu áp lực cao.",
         caption: "Cao su Chloroprene: Vỏ cáp điện, băng tải chịu nhiệt, ống dẫn dầu áp lực cao"
@@ -1842,46 +1942,110 @@
 
       const tBadge = document.getElementById('synthTypeBadge');
       if (tBadge) tBadge.textContent = data.type;
+
       const cBadge = document.getElementById('synthCatBadge');
       if (cBadge) cBadge.textContent = data.cat;
+
       const eqText = document.getElementById('synthEqText');
       if (eqText) eqText.innerHTML = data.eq;
+
       const dTitle = document.getElementById('synthDetailTitle');
       if (dTitle) dTitle.textContent = data.title;
+
       const cText = document.getElementById('synthConcept');
       if (cText) cText.textContent = data.concept;
+
       const fText = document.getElementById('synthFeatures');
       if (fText) fText.textContent = data.features;
-      const capText = document.getElementById('synthImgCaption');
-      if (capText) capText.textContent = data.caption;
       
+      // Nạp ảnh phương trình bên trái từ Google Drive
       const eqImg = document.getElementById('img-synth-equation');
       if (eqImg) {
+        const fileId = DRIVE_IMAGES[data.driveKey];
+        const primaryUrl = getDriveImageUrl(fileId, data.localSrc);
         eqImg.classList.add('opacity-0', 'scale-95');
         setTimeout(() => {
-          eqImg.src = data.imgSrc;
+          eqImg.onerror = function() {
+            if (!this.dataset.retry) {
+              this.dataset.retry = "1";
+              this.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1920`;
+            } else {
+              this.src = data.localSrc;
+            }
+          };
+          eqImg.src = primaryUrl;
           eqImg.classList.remove('opacity-0', 'scale-95');
+        }, 150);
+      }
+
+      // Nạp ảnh nhỏ góc dưới bên phải Slide 5 từ Google Drive
+      const subImg = document.getElementById('img-s6-synth');
+      if (subImg) {
+        const appFileId = DRIVE_IMAGES[data.appDriveKey];
+        const appPrimaryUrl = getDriveImageUrl(appFileId, data.appLocalSrc);
+        subImg.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+          subImg.onerror = function() {
+            if (!this.dataset.retry) {
+              this.dataset.retry = "1";
+              this.src = `https://drive.google.com/thumbnail?id=${appFileId}&sz=w1920`;
+            } else {
+              this.src = data.appLocalSrc || "";
+            }
+          };
+          subImg.src = appPrimaryUrl;
+          subImg.classList.remove('opacity-0', 'scale-95');
         }, 150);
       }
     }
 
-    window.toggleImageAdjuster = function() {
-      const panel = document.getElementById('imageAdjusterPanel');
-      if (panel) panel.classList.toggle('hidden');
-    };
+    /* ========================================================
+       SLIDE 8: DANH SÁCH 4 ẢNH FULL TRANG GOOGLE DRIVE
+       ======================================================== */
+    let currentAppTopicIdx = 0;
+    const slide8Images = [
+      { id: "1PHMgxxNUCK6jOKkf4ASLJFI1o2udQUGq", local: "giao-thong.jpg", title: "1. Giao Thông & Xây Dựng" },
+      { id: "1IjuPLi7Vgg6nSnoOYC1DWkXSktuFt4hk", local: "y-te.jpg", title: "2. Y Tế & Sinh Hoạt" },
+      { id: "1Fs9c2STLcF4Bp0W7WIxZmW-wwVV39KtA", local: "o-nhiem.jpg", title: "3. Ô Nhiễm Môi Trường" },
+      { id: "1b63QQa2D_Z43YZb_xKPVp1P-s5Dn8_yw", local: "tai-che.jpg", title: "4. Xử Lí & Tái Chế" }
+    ];
 
-    window.setImageFitMode = function(mode) {
-      const img = document.getElementById('img-synth-equation');
-      if (!img) return;
-      img.style.objectFit = (mode === 'cover') ? 'cover' : 'contain';
-    };
+    function pickAppTopic(idx) {
+      currentAppTopicIdx = idx;
+      const tabs = document.querySelectorAll('.app-topic-btn');
+      tabs.forEach((tab, i) => {
+        if (i === idx) {
+          tab.className = "app-topic-btn active px-3 py-1 rounded-full border border-emerald-400 bg-emerald-500/20 text-emerald-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow";
+        } else {
+          tab.className = "app-topic-btn px-3 py-1 rounded-full border border-slate-700 bg-slate-900/80 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer";
+        }
+      });
 
-    window.setImageZoom = function(val) {
-      const img = document.getElementById('img-synth-equation');
-      const zoomText = document.getElementById('zoomVal');
-      if (img) img.style.transform = `scale(${val / 100})`;
-      if (zoomText) zoomText.textContent = `${val}%`;
-    };
+      const imgEl = document.getElementById('slide8TopicImg');
+      if (imgEl) {
+        const item = slide8Images[idx];
+        const primaryUrl = `https://lh3.googleusercontent.com/d/${item.id}`;
+        imgEl.classList.add('opacity-0', 'scale-98');
+        setTimeout(() => {
+          imgEl.dataset.retry = "";
+          imgEl.onerror = function() {
+            if (!this.dataset.retry) {
+              this.dataset.retry = "1";
+              this.src = `https://drive.google.com/thumbnail?id=${item.id}&sz=w1920`;
+            } else {
+              this.src = item.local;
+            }
+          };
+          imgEl.src = primaryUrl;
+          imgEl.classList.remove('opacity-0', 'scale-98');
+        }, 150);
+      }
+
+      const secLabel = document.getElementById('sectionLabelTop');
+      if (secLabel && currentSlide === totalSlides - 1) {
+        secLabel.textContent = `8. VI. ${slide8Images[idx].title.toUpperCase()}`;
+      }
+    }
 
     /* 6. SLIDE 7: MÔ PHỎNG LƯU HOÁ CAO SU (150 °C) */
     let vulcanCanvasInit = false;
@@ -2087,6 +2251,49 @@
       resizeBgCanvas();
     });
 
+    // Tự động nhận diện và áp dụng ảnh nền Slide 1
+    function setupSlide1Background() {
+      const slide1 = document.getElementById('slide1CoverContainer');
+      if (!slide1) return;
+      
+      const fileId = DRIVE_IMAGES.background;
+      const primaryUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+      const fallbackUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1920`;
+
+      const testImg = new Image();
+      testImg.onload = () => {
+        slide1.style.backgroundImage = `url('${primaryUrl}')`;
+      };
+      testImg.onerror = () => {
+        const testImg2 = new Image();
+        testImg2.onload = () => {
+          slide1.style.backgroundImage = `url('${fallbackUrl}')`;
+        };
+        testImg2.onerror = () => {
+          slide1.style.backgroundImage = "url('backgroud.png')";
+        };
+        testImg2.src = fallbackUrl;
+      };
+      testImg.src = primaryUrl;
+      slide1.style.backgroundImage = `url('${primaryUrl}')`;
+    }
+
+    // Thiết lập ảnh Slide 4
+    function setupSlide4Image() {
+      const imgS4 = document.getElementById('img-s4-structure');
+      if (!imgS4) return;
+      const fileId = DRIVE_IMAGES.polyizopren;
+      imgS4.onerror = function() {
+        if (!this.dataset.retry) {
+          this.dataset.retry = "1";
+          this.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1920`;
+        } else {
+          this.src = "Polyizopren.png";
+        }
+      };
+      imgS4.src = `https://lh3.googleusercontent.com/d/${fileId}`;
+    }
+
     window.onload = function() {
       resizeCurtainAndDust();
       initStageDust();
@@ -2094,6 +2301,10 @@
       renderBgFormulas();
       requestAnimationFrame(masterStageAnimationLoop);
       updateSlideDisplay();
+      setupSlide1Background();
+      setupSlide4Image();
+      pickSyntheticRubber(0);
+      pickAppTopic(0);
     };
   </script>
 </body>
